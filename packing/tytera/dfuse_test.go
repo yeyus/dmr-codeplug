@@ -1,4 +1,4 @@
-package packing
+package tytera
 
 import (
 	"io/ioutil"
@@ -50,5 +50,5 @@ func TestGetTyteraDfuSe(t *testing.T) {
 		t.Errorf("DFU checksum is invalid, expected 0x%x but got 0x%x", TYTERA_BROKEN_CRC, dfuse.CRC)
 	}
 
-	t.Logf("DfuSe instance: %+v\n", dfuse)
+	t.Logf("%s\n", dfuse.String())
 }
