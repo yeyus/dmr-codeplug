@@ -114,6 +114,20 @@ func (t *TyteraDfuSe) parseSuffix(file []byte) error {
 	return nil
 }
 
+func (t *TyteraDfuSe) GetCodeplugs() (result [][]byte) {
+	for _, target := range t.Target {
+		if target.Size == 0x40008 && target.Name == "SPI Flash : M25P16" {
+			for _, element := range target.Element {
+				if element.Size == 0x40000 && element.Start == 0 {
+					result = append(result, element.Data)
+				}
+			}
+		}
+	}
+
+	return
+}
+
 func (t *TyteraDfuSe) String() string {
 	var targets bytes.Buffer
 	for _, target := range t.Target {
@@ -122,10 +136,10 @@ func (t *TyteraDfuSe) String() string {
 
 	return fmt.Sprintf(
 		"\n==== Image ==== \n"+
-			"Tytera DfuSe Image."+
+			"Tytera DfuSe Image\n"+
 			"Version: 0x%X Size: 0x%X CRC: 0x%X\n"+
 			"VersionID: 0x%X ProductID: 0x%X VendorID: 0x%X \n"+
 			"==== Targets ====\n"+
-			"%s\n"+
+			"%s"+
 			"==== /Image ==== \n", t.Version, t.Size, t.CRC, t.VersionID, t.ProductID, t.VendorID, targets.String())
 }

@@ -1,0 +1,5 @@
+* DMR Codeplug
+
+** Compile protocol buffers
+
+: protoc --go_out=import_path=proto/tytera:. proto/tytera/*.proto

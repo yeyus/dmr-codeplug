@@ -58,8 +58,6 @@ func (t *DfuSeTarget) String() string {
 
 	return fmt.Sprintf(
 		"[> Alternate: 0x%X Name: %s Size: 0x%X\n"+
-			"\t--- Elements ---\n"+
-			"%s"+
-			"\t--- /Elements ---\n",
+			"%s",
 		t.AlternateSetting, t.Name, t.Size, elements.String())
 }

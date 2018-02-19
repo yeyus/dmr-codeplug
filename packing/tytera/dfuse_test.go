@@ -52,3 +52,23 @@ func TestGetTyteraDfuSe(t *testing.T) {
 
 	t.Logf("%s\n", dfuse.String())
 }
+
+func TestGetCodeplugs(t *testing.T) {
+	d := dfuseTest{}
+	content := d.getRDTBytes("testdata/usa_codeplug.rdt")
+
+	dfuse, err := GetTyteraDfuSe(content)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	codeplugs := dfuse.GetCodeplugs()
+
+	if len(codeplugs) != 1 {
+		t.Errorf("expected 1 codeplug but got %d", len(codeplugs))
+	}
+
+	if len(codeplugs[0]) != 0x40000 {
+		t.Errorf("expected codeplug to have size 0x40000 but got %d", len(codeplugs[0]))
+	}
+}

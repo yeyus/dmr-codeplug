@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package go.ea7jmf.codeplug.tytera;
+
+import "google/protobuf/timestamp.proto";
+
+message BasicInformation {
+        string model_name = 1;
+        repeated RadioBand radio_bands = 2;
+        string hardware_version = 3;
+        string mcu_version = 4;
+        string device_id = 5;
+        google.protobuf.Timestamp last_program_date = 6;
+        string cps_version = 7;
+}
+
+enum RadioBand {
+     VHF_136_174 = 0;
+     UHF_350_400 = 1;
+     UHF_400_480 = 2;
+     UHF_450_520 = 3;
+     DISABLED = 255;
+}
