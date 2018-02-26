@@ -23,7 +23,7 @@ func TestBasicInformationParsing(t *testing.T) {
 	d := biTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	bi := GetBasicInformationDecoder()
+	bi := GetBasicInformationGroup()
 
 	b, err := json.MarshalIndent(bi.Decode(content[:], 0x125), "", "  ")
 	if err != nil {

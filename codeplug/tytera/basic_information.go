@@ -18,12 +18,13 @@ type BasicInformationGroup struct {
 	BasicInformation tytera.BasicInformation
 }
 
-func GetBasicInformationDecoder() BasicInformationGroup {
-	b := BasicInformationGroup{}
-
-	b.Length = 0x210B
-
-	b.BasicInformation = tytera.BasicInformation{}
+func GetBasicInformationGroup() BasicInformationGroup {
+	b := BasicInformationGroup{
+		EntityID:         "com.tytera.basic",
+		Base:             0x210B,
+		Length:           0, // ?
+		BasicInformation: tytera.BasicInformation{},
+	}
 
 	b.Decoders = []encoding.Decoder{
 		&base.ASCIIStringDecoder{

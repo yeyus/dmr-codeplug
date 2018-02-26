@@ -21,3 +21,102 @@ enum RadioBand {
      UHF_450_520 = 3;
      DISABLED = 255;
 }
+
+message GeneralSettings {
+        repeated string screen_lines = 1;
+        MonitorType monitor_type = 2;
+        bool disable_leds = 3;
+        SystemType talk_permit_tone = 4;
+        bool disable_password_and_lock = 5;
+        bool disable_ch_free_tone = 6;
+        bool disable_tones = 7;
+        bool bat_save_receive_mode = 8;
+        bool bat_save_preamble = 9;
+        IntroScreenMode intro_screen_mode = 10;
+        uint32 radio_id = 11;
+        uint32 tx_preamble = 12;
+        uint32 group_call_hang = 13;
+        uint32 private_call_hang = 14;
+        uint32 vox_sensitivity = 15;
+        uint32 rx_low_battery = 16;
+        uint32 call_alert_tone = 17;
+        uint32 lone_worker_response = 18;
+        uint32 lone_worker_reminder = 19;
+        uint32 scan_digital_hang_time = 20;
+        uint32 scan_analog_hang_time = 21;
+        uint32 keypad_lock = 22;
+        OperationMode operation_mode = 23;
+        uint32 power_on_password = 24;
+        uint32 radio_programming_password = 25;
+        string pc_programming_password = 26;
+        string radio_name = 27;
+}
+
+enum MonitorType {
+     SILENT = 0;
+     OPEN_SQUELCH = 1;
+}
+
+enum SystemType {
+     NONE = 0;
+     DIGITAL = 1;
+     ANALOG = 2;
+     BOTH = 3;
+}
+
+enum IntroScreenMode {
+     CHAR_STRING = 0;
+     PICTURE = 1;
+}
+
+enum OperationMode {
+     MR = 0;
+     CHANNEL = 255;
+}
+
+message MenuItems {
+        uint32 hang_time = 1;
+        bool text_messages = 2;
+        ContactsMenu contacts = 3;
+        CallLogMenu call_log = 4;
+        ScanMenu scan = 5;
+        UtilitiesMenu utilities = 6;
+}
+
+message ContactsMenu {
+        bool radio_disable = 1;
+        bool radio_enable = 2;
+        bool remote_monitor = 3;
+        bool radio_check = 4;
+        bool manual_dial = 5;
+        bool edit = 6;
+        bool call_alert = 7;
+        bool program_key = 8;
+}
+
+message CallLogMenu {
+        bool outgoing_radio = 1;
+        bool answered = 2;
+        bool missed = 3;
+}
+
+message ScanMenu {
+        bool edit_list = 1;
+        bool scan = 2;
+}
+
+message UtilitiesMenu {
+        bool tone_or_alert = 1;
+        bool talkaround = 2;
+        bool vox = 3;
+        bool squelch = 4;
+        bool led_indicator = 5;
+        bool keyboard_lock = 6;
+        bool intro_screen = 7;
+        bool backlight = 8;
+        bool power = 9;
+        bool gps = 10;
+        bool program_radio = 11;
+        bool display_mode = 12;
+        bool password_and_lock = 13;
+}
