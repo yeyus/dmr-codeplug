@@ -22,7 +22,7 @@ func TestUint64DecoderLE(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.Uint64 {
-		t.Errorf("returned type for decoder is not uint64, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not uint64, got %v", d.GetEntityType())
 	}
 
 	if o != uint64(0x1234567812) {
@@ -48,7 +48,7 @@ func TestUint64DecoderBE(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.Uint64 {
-		t.Errorf("returned type for decoder is not uint64, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not uint64, got %v", d.GetEntityType())
 	}
 
 	if o != uint64(0x1278563412) {

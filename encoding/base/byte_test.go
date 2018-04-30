@@ -20,7 +20,7 @@ func TestByteDecoder(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.Uint8 {
-		t.Errorf("returned type for decoder is not uint8, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not uint8, got %v", d.GetEntityType())
 	}
 
 	if o != uint8(0xAA) {

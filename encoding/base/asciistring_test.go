@@ -21,7 +21,7 @@ func TestASCIIStringDecoder(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.String {
-		t.Errorf("returned type for decoder is not string, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not string, got %v", d.GetEntityType())
 	}
 
 	if o != "TEST" {

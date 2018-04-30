@@ -22,7 +22,7 @@ func TestUTF16StringDecoderLE(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.String {
-		t.Errorf("returned type for decoder is not string, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not string, got %v", d.GetEntityType())
 	}
 
 	if o != "ABCD" {
@@ -48,7 +48,7 @@ func TestUTF16StringDecoderBE(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.String {
-		t.Errorf("returned type for decoder is not string, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not string, got %v", d.GetEntityType())
 	}
 
 	if o != "ABCD" {

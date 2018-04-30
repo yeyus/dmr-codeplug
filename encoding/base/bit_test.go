@@ -21,11 +21,11 @@ func TestBitDecoder1(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.Bool {
-		t.Errorf("returned type for decoder is not bool, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not bool, got %v", d.GetEntityType())
 	}
 
 	if !o {
-		t.Errorf("expected decoder output to be true, but got %s", o)
+		t.Errorf("expected decoder output to be true, but got %t", o)
 	}
 }
 
@@ -45,10 +45,10 @@ func TestBitDecoder2(t *testing.T) {
 	}
 
 	if d.GetEntityType() != types.Bool {
-		t.Errorf("returned type for decoder is not bool, got %s", d.GetEntityType())
+		t.Errorf("returned type for decoder is not bool, got %v", d.GetEntityType())
 	}
 
 	if o {
-		t.Errorf("expected decoder output to be false, but got %s", o)
+		t.Errorf("expected decoder output to be false, but got %t", o)
 	}
 }
