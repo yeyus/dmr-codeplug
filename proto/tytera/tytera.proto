@@ -4,6 +4,12 @@ package go.ea7jmf.codeplug.tytera;
 
 import "google/protobuf/timestamp.proto";
 
+/*
+ * ------------------
+ * Basic Information
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Basic-Information
+ */
 message BasicInformation {
         string model_name = 1;
         repeated RadioBand radio_bands = 2;
@@ -21,6 +27,13 @@ enum RadioBand {
      UHF_450_520 = 3;
      DISABLED = 255;
 }
+
+/*
+ * ------------------
+ * General settings
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---General-Settings
+ */
 
 message GeneralSettings {
         repeated string screen_lines = 1;
@@ -74,6 +87,13 @@ enum OperationMode {
      CHANNEL = 255;
 }
 
+/*
+ * ------------------
+ * Menus
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Menu-Items
+ */
+
 message MenuItems {
         uint32 hang_time = 1;
         bool text_messages = 2;
@@ -119,4 +139,86 @@ message UtilitiesMenu {
         bool program_radio = 11;
         bool display_mode = 12;
         bool password_and_lock = 13;
+}
+
+/*
+ * ------------------
+ * Button definitions
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Button-Definitions
+ */
+
+enum ButtonFunction {
+     UNASSIGNED = 0;
+     ALL_ALERT_TONES_ONOFF = 1;
+     EMERGENCY_ON = 2;
+     EMERGENCY_OFF = 3;
+     HIGH_LOW_POWER = 4;
+     MONITOR = 5;
+     NUISANCE_DELETE = 6;
+     ONE_TOUCH_ACCESS_1 = 7;
+     ONE_TOUCH_ACCESS_2 = 8;
+     ONE_TOUCH_ACCESS_3 = 9;
+     ONE_TOUCH_ACCESS_4 = 10;
+     ONE_TOUCH_ACCESS_5 = 11;
+     ONE_TOUCH_ACCESS_6 = 12;
+     REPEATER_TALKAROUND = 13;
+     SCAN_ONOFF = 14;
+     TIGHT_NORMAL_SQUELCH = 21;
+     PRIVACY_ONOFF = 22;
+     VOX_ONOFF = 23;
+     ZONE_TOGGLE = 25;
+     BATTERY_INDICATOR = 26;
+     MANUAL_DIAL = 30;
+     LONE_WORK_ONOFF = 31;
+     TONE_1750HZ = 38;
+}
+
+enum OneTouchCallType {
+     // Mode = none
+     NO_CALL_TYPE = 0;
+
+     // Mode = analog
+     DTMF1 = 1;
+     DTMF2 = 2;
+     DTMF3 = 3;
+     DTMF4 = 4;
+
+     // Mode = digital
+     CALL = 101;
+     TEXT_MESSAGE = 102;
+}
+
+message OneTouchAccessEntry {
+        SystemType mode = 1;
+        OneTouchCallType call_type = 2;
+
+        // only if Mode = digital
+        uint32 message_preset = 3;
+        uint32 contact_index = 4;
+
+        // only if Mode = analog
+        uint32 dtmf_encode_preset = 5;
+}
+
+message ButtonDefinitions {
+        uint32 long_press_duration = 1;
+        ButtonFunction side_short_1 = 2;
+        ButtonFunction side_short_2 = 3;
+        ButtonFunction side_long_1 = 4;
+        ButtonFunction side_long_2 = 5;
+
+        // max of 6 entries
+        repeated OneTouchAccessEntry one_touch_access = 6;
+
+        uint32 contact_key_0 = 100;
+        uint32 contact_key_1 = 101;
+        uint32 contact_key_2 = 102;
+        uint32 contact_key_3 = 103;
+        uint32 contact_key_4 = 104;
+        uint32 contact_key_5 = 105;
+        uint32 contact_key_6 = 106;
+        uint32 contact_key_7 = 107;
+        uint32 contact_key_8 = 108;
+        uint32 contact_key_9 = 109;
 }
