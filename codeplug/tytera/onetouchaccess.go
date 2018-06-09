@@ -15,7 +15,7 @@ type OneTouchAccessEntry struct {
 
 func GetOneTouchAccessEntry() OneTouchAccessEntry {
 	m := OneTouchAccessEntry{
-		EntityID:            "com.tytera.buttons.onetouch",
+		EntityID:            "com.tytera.buttons.onetouch[%d]",
 		OneTouchAccessEntry: tytera.OneTouchAccessEntry{},
 	}
 

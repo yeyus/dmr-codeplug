@@ -222,3 +222,13 @@ message ButtonDefinitions {
         uint32 contact_key_8 = 108;
         uint32 contact_key_9 = 109;
 }
+
+/*
+ * ------------------
+ * Message Presets
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Text-Messages
+ */
+message MessagePresets {
+        repeated string messages = 1;
+}

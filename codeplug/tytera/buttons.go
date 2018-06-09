@@ -142,7 +142,7 @@ func (t *ButtonsGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {
 	case "com.tytera.buttons.sideLong2":
 		s := d.Decode(buf, base).(uint8)
 		t.Buttons.SideLong_2 = decodeButtonFunction(s)
-	case "com.tytera.buttons.onetouch[]":
+	case "com.tytera.buttons.onetouch[%d]":
 		s := d.Decode(buf, base)
 		var arr []*tytera.OneTouchAccessEntry
 		for _, ota := range s.([]interface{}) {

@@ -1,7 +1,6 @@
 package encoding
 
 import (
-	"fmt"
 	"go/types"
 )
 
@@ -13,7 +12,7 @@ type RepeatedDecoder struct {
 }
 
 func (t *RepeatedDecoder) GetEntityID() string {
-	return fmt.Sprintf("%s[]", t.Decoder.GetEntityID())
+	return t.Decoder.GetEntityID()
 }
 
 func (t *RepeatedDecoder) GetEntityType() types.BasicKind {
