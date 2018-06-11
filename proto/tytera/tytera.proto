@@ -232,3 +232,15 @@ message ButtonDefinitions {
 message MessagePresets {
         repeated string messages = 1;
 }
+
+
+/*
+ * ------------------
+ * Privacy Settings
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Privacy-Settings
+ */
+message PrivacySettings {
+         repeated bytes basic_keys = 1;
+         repeated bytes enhanced_keys = 2;
+}
