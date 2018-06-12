@@ -244,3 +244,42 @@ message PrivacySettings {
          repeated bytes basic_keys = 1;
          repeated bytes enhanced_keys = 2;
 }
+
+/*
+ * ------------------
+ * Emergency Systems
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Digit-Emergency-System
+ */
+enum AlarmType {
+     DISABLED_TYPE = 0;
+     REGULAR_TYPE = 1;
+     SILENT_TYPE = 2;
+     SILENT_WITH_VOICE_TYPE = 3;
+}
+
+enum AlarmMode {
+     EMERGENCY_ALARM = 0;
+     EMERGENCY_ALARM_WITH_CALL = 1;
+     EMERGENCY_ALARM_WITH_VOICE_TO_FOLLOW = 2;
+}
+
+message EmergencySystemEntry {
+        string system_name = 1;
+        uint32 revert_channel = 2;
+        AlarmType alarm_type = 3;
+        AlarmMode alarm_mode = 4;
+        uint32 impolite_retries = 5;
+        uint32 polite_retries = 6;
+        uint32 hot_mic_duration = 7;
+}
+
+message EmergencySystems {
+        bool radio_disable_decode = 1;
+        bool remote_monitor_decode = 2;
+        bool emergency_remote_monitor_decode = 3;
+        uint32 remote_monitor_duration = 4;
+        uint32 tx_sync_wakeup = 5;
+        uint32 tx_wakeup_message_limit = 6;
+        repeated EmergencySystemEntry entries = 7;
+}
