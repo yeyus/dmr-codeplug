@@ -83,7 +83,8 @@ func TestEmergencyEntries(t *testing.T) {
 
 	testEntry(t, es.Systems.Entries[0], "System1", tytera.AlarmType_REGULAR_TYPE, tytera.AlarmMode_EMERGENCY_ALARM, 15, 5, 10, 0)
 	testEntry(t, es.Systems.Entries[1], "Call DMR Call", tytera.AlarmType_REGULAR_TYPE, tytera.AlarmMode_EMERGENCY_ALARM, 15, 5, 10, 1)
-	testEntry(t, es.Systems.Entries[2], "Call WorldWide", tytera.AlarmType_SILENT_WITH_VOICE_TYPE, tytera.AlarmMode_EMERGENCY_ALARM_WITH_VOICE_TO_FOLLOW, 15, 5, 10, 2)
+	testEntry(t, es.Systems.Entries[2], "Call Hotspot", tytera.AlarmType_SILENT_TYPE, tytera.AlarmMode_EMERGENCY_ALARM_WITH_CALL, 10, 10, 100, 2)
+	testEntry(t, es.Systems.Entries[3], "Call WorldWide", tytera.AlarmType_SILENT_WITH_VOICE_TYPE, tytera.AlarmMode_EMERGENCY_ALARM_WITH_VOICE_TO_FOLLOW, 15, 5, 10, 3)
 
 }
 
