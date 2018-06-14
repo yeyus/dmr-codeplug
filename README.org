@@ -2,4 +2,8 @@
 
 ** Compile protocol buffers
 
-: protoc --go_out=import_path=proto/tytera:. proto/tytera/*.proto
+: make proto
+
+** Run tests
+
+: make test

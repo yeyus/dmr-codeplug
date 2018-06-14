@@ -28,6 +28,8 @@ func (t *BitMaskDecoder) Decode(buf []byte, base uint32) interface{} {
 	for i = 0; i < 8; i++ {
 		if (t.BitMask>>i)&1 == 0 {
 			leadingzeros++
+		} else {
+			break
 		}
 	}
 

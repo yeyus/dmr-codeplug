@@ -4,6 +4,28 @@ package go.ea7jmf.codeplug.tytera;
 
 import "google/protobuf/timestamp.proto";
 
+/*
+ * ------------------
+ * Codeplug
+ * ------------------
+ */
+message TyteraCodeplug {
+        BasicInformation basic_information = 1;
+        GeneralSettings general_settings = 2;
+        MenuItems menu_items = 3;
+        ButtonDefinitions button_definitions = 4;
+        MessagePresets message_presets = 5;
+        PrivacySettings privacy_settings = 6;
+        EmergencySystems emergency_systems = 7;
+        Contacts contacts = 8;
+}
+
+/*
+ * ------------------
+ * Basic Information
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Basic-Information
+ */
 message BasicInformation {
         string model_name = 1;
         repeated RadioBand radio_bands = 2;
@@ -21,6 +43,13 @@ enum RadioBand {
      UHF_450_520 = 3;
      DISABLED = 255;
 }
+
+/*
+ * ------------------
+ * General settings
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---General-Settings
+ */
 
 message GeneralSettings {
         repeated string screen_lines = 1;
@@ -74,6 +103,13 @@ enum OperationMode {
      CHANNEL = 255;
 }
 
+/*
+ * ------------------
+ * Menus
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Menu-Items
+ */
+
 message MenuItems {
         uint32 hang_time = 1;
         bool text_messages = 2;
@@ -119,4 +155,171 @@ message UtilitiesMenu {
         bool program_radio = 11;
         bool display_mode = 12;
         bool password_and_lock = 13;
+}
+
+/*
+ * ------------------
+ * Button definitions
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Button-Definitions
+ */
+
+enum ButtonFunction {
+     UNASSIGNED = 0;
+     ALL_ALERT_TONES_ONOFF = 1;
+     EMERGENCY_ON = 2;
+     EMERGENCY_OFF = 3;
+     HIGH_LOW_POWER = 4;
+     MONITOR = 5;
+     NUISANCE_DELETE = 6;
+     ONE_TOUCH_ACCESS_1 = 7;
+     ONE_TOUCH_ACCESS_2 = 8;
+     ONE_TOUCH_ACCESS_3 = 9;
+     ONE_TOUCH_ACCESS_4 = 10;
+     ONE_TOUCH_ACCESS_5 = 11;
+     ONE_TOUCH_ACCESS_6 = 12;
+     REPEATER_TALKAROUND = 13;
+     SCAN_ONOFF = 14;
+     TIGHT_NORMAL_SQUELCH = 21;
+     PRIVACY_ONOFF = 22;
+     VOX_ONOFF = 23;
+     ZONE_TOGGLE = 25;
+     BATTERY_INDICATOR = 26;
+     MANUAL_DIAL = 30;
+     LONE_WORK_ONOFF = 31;
+     TONE_1750HZ = 38;
+}
+
+enum OneTouchCallType {
+     // Mode = none
+     NO_CALL_TYPE = 0;
+
+     // Mode = analog
+     DTMF1 = 1;
+     DTMF2 = 2;
+     DTMF3 = 3;
+     DTMF4 = 4;
+
+     // Mode = digital
+     CALL = 101;
+     TEXT_MESSAGE = 102;
+}
+
+message OneTouchAccessEntry {
+        SystemType mode = 1;
+        OneTouchCallType call_type = 2;
+
+        // only if Mode = digital
+        uint32 message_preset = 3;
+        uint32 contact_index = 4;
+
+        // only if Mode = analog
+        uint32 dtmf_encode_preset = 5;
+}
+
+message ButtonDefinitions {
+        uint32 long_press_duration = 1;
+        ButtonFunction side_short_1 = 2;
+        ButtonFunction side_short_2 = 3;
+        ButtonFunction side_long_1 = 4;
+        ButtonFunction side_long_2 = 5;
+
+        // max of 6 entries
+        repeated OneTouchAccessEntry one_touch_access = 6;
+
+        uint32 contact_key_0 = 100;
+        uint32 contact_key_1 = 101;
+        uint32 contact_key_2 = 102;
+        uint32 contact_key_3 = 103;
+        uint32 contact_key_4 = 104;
+        uint32 contact_key_5 = 105;
+        uint32 contact_key_6 = 106;
+        uint32 contact_key_7 = 107;
+        uint32 contact_key_8 = 108;
+        uint32 contact_key_9 = 109;
+}
+
+/*
+ * ------------------
+ * Message Presets
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Text-Messages
+ */
+message MessagePresets {
+        repeated string messages = 1;
+}
+
+
+/*
+ * ------------------
+ * Privacy Settings
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Privacy-Settings
+ */
+message PrivacySettings {
+         repeated bytes basic_keys = 1;
+         repeated bytes enhanced_keys = 2;
+}
+
+/*
+ * ------------------
+ * Emergency Systems
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Digit-Emergency-System
+ */
+enum AlarmType {
+     DISABLED_TYPE = 0;
+     REGULAR_TYPE = 1;
+     SILENT_TYPE = 2;
+     SILENT_WITH_VOICE_TYPE = 3;
+}
+
+enum AlarmMode {
+     EMERGENCY_ALARM = 0;
+     EMERGENCY_ALARM_WITH_CALL = 1;
+     EMERGENCY_ALARM_WITH_VOICE_TO_FOLLOW = 2;
+}
+
+message EmergencySystemEntry {
+        string system_name = 1;
+        uint32 revert_channel = 2;
+        AlarmType alarm_type = 3;
+        AlarmMode alarm_mode = 4;
+        uint32 impolite_retries = 5;
+        uint32 polite_retries = 6;
+        uint32 hot_mic_duration = 7;
+}
+
+message EmergencySystems {
+        bool radio_disable_decode = 1;
+        bool remote_monitor_decode = 2;
+        bool emergency_remote_monitor_decode = 3;
+        uint32 remote_monitor_duration = 4;
+        uint32 tx_sync_wakeup = 5;
+        uint32 tx_wakeup_message_limit = 6;
+        repeated EmergencySystemEntry entries = 7;
+}
+
+/*
+ * ------------------
+ * Contacts
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Digital-Contact
+ */
+enum CallType {
+     CALL_TYPE_NOT_SET = 0;
+     GROUP_CALL = 1;
+     PRIVATE_CALL = 2;
+     ALL_CALL = 3;
+}
+
+message ContactEntry {
+        uint32 id = 1;
+        string name = 2;
+        bool call_receive_tone = 3;
+        CallType call_type = 4;
+}
+
+message Contacts {
+        repeated ContactEntry entries = 1;
 }
