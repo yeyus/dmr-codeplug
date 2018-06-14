@@ -283,3 +283,27 @@ message EmergencySystems {
         uint32 tx_wakeup_message_limit = 6;
         repeated EmergencySystemEntry entries = 7;
 }
+
+/*
+ * ------------------
+ * Contacts
+ * ------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Digital-Contact
+ */
+enum CallType {
+     CALL_TYPE_NOT_SET = 0;
+     GROUP_CALL = 1;
+     PRIVATE_CALL = 2;
+     ALL_CALL = 3;
+}
+
+message ContactEntry {
+        uint32 id = 1;
+        string name = 2;
+        bool call_receive_tone = 3;
+        CallType call_type = 4;
+}
+
+message Contacts {
+        repeated ContactEntry entries = 1;
+}
