@@ -24,7 +24,7 @@ func TestContactsParsing(t *testing.T) {
 	d := contactsTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	cs := GetContacts()
+	cs := GetContactsGroup()
 
 	b, err := json.MarshalIndent(cs.Decode(content[:], 0x125), "", " ")
 	if err != nil {
@@ -39,7 +39,7 @@ func TestContactsProto(t *testing.T) {
 	d := contactsTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	cs := GetContacts()
+	cs := GetContactsGroup()
 	cs.Decode(content[:], 0x125)
 
 	testContact(t, cs, 0, 2, "Local", true, tytera.CallType_GROUP_CALL)
@@ -51,7 +51,7 @@ func TestContactsProto(t *testing.T) {
 
 }
 
-func testContact(t *testing.T, c Contacts, idx int, id uint32, name string, callTone bool, callType tytera.CallType) {
+func testContact(t *testing.T, c ContactsGroup, idx int, id uint32, name string, callTone bool, callType tytera.CallType) {
 	entry := c.Contacts.Entries[idx]
 	if entry.Id != id {
 		t.Errorf("[idx %d] expected contact id to be %d, but got %d", idx, id, entry.Id)

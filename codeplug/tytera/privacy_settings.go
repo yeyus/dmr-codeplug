@@ -7,7 +7,7 @@ import (
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
 )
 
-type PrivacySettings struct {
+type PrivacySettingsGroup struct {
 	EntityID string
 	Base     uint32
 	Length   uint32
@@ -15,8 +15,8 @@ type PrivacySettings struct {
 	Privacy  tytera.PrivacySettings
 }
 
-func GetPrivacySettings() PrivacySettings {
-	m := PrivacySettings{
+func GetPrivacySettingsGroup() PrivacySettingsGroup {
+	m := PrivacySettingsGroup{
 		EntityID: "com.tytera.privacy",
 		Base:     0x5AC0,
 		Length:   0xAF,
@@ -51,7 +51,7 @@ func GetPrivacySettings() PrivacySettings {
 	return m
 }
 
-func (t *PrivacySettings) Decode(buf []byte, base uint32) map[string]string {
+func (t *PrivacySettingsGroup) Decode(buf []byte, base uint32) map[string]string {
 	m := map[string]string{}
 
 	// decode enhanced privacy

@@ -24,7 +24,7 @@ func TestMessagePresetsParsing(t *testing.T) {
 	d := messagesTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	mp := GetMessagePresets()
+	mp := GetMessagePresetsGroup()
 
 	m, err := json.MarshalIndent(mp.Decode(content[:], 0x125), "", " ")
 	if err != nil {
@@ -38,7 +38,7 @@ func TestMessagePresetsProto(t *testing.T) {
 	d := messagesTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	mp := GetMessagePresets()
+	mp := GetMessagePresetsGroup()
 
 	mp.Decode(content[:], 0x125)
 

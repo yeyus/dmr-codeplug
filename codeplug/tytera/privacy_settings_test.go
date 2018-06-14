@@ -23,7 +23,7 @@ func TestPrivacySettingsParsing(t *testing.T) {
 	d := privacyTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	ps := GetPrivacySettings()
+	ps := GetPrivacySettingsGroup()
 
 	p, err := json.MarshalIndent(ps.Decode(content[:], 0x125), "", " ")
 	if err != nil {
@@ -37,7 +37,7 @@ func TestPrivacySettingsProto(t *testing.T) {
 	d := privacyTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	ps := GetPrivacySettings()
+	ps := GetPrivacySettingsGroup()
 
 	ps.Decode(content[:], 0x125)
 

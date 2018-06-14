@@ -24,7 +24,7 @@ func TestEmergencySystemsParsing(t *testing.T) {
 	d := emergencyTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	es := GetEmergencySystems()
+	es := GetEmergencySystemsGroup()
 
 	b, err := json.MarshalIndent(es.Decode(content[:], 0x125), "", " ")
 	if err != nil {
@@ -39,7 +39,7 @@ func TestEmergencySystemsProto(t *testing.T) {
 	d := emergencyTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	es := GetEmergencySystems()
+	es := GetEmergencySystemsGroup()
 
 	es.Decode(content[:], 0x125)
 
@@ -77,7 +77,7 @@ func TestEmergencyEntries(t *testing.T) {
 	d := emergencyTest{}
 	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
-	es := GetEmergencySystems()
+	es := GetEmergencySystemsGroup()
 
 	es.Decode(content[:], 0x125)
 

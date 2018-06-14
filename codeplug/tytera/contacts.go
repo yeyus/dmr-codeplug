@@ -8,7 +8,7 @@ import (
 	"go/types"
 )
 
-type Contacts struct {
+type ContactsGroup struct {
 	EntityID string
 	Base     uint32
 	Length   uint32
@@ -16,8 +16,8 @@ type Contacts struct {
 	Contacts tytera.Contacts
 }
 
-func GetContacts() Contacts {
-	m := Contacts{
+func GetContactsGroup() ContactsGroup {
+	m := ContactsGroup{
 		EntityID: "com.tytera.contacts",
 		Base:     0x6080,
 		Length:   0x8CA0,
@@ -36,7 +36,7 @@ func GetContacts() Contacts {
 	return m
 }
 
-func (t *Contacts) Decode(buf []byte, base uint32) (m map[string]string) {
+func (t *ContactsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
 	m = map[string]string{}
 
 	d := t.Decoders[0]

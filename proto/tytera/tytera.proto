@@ -6,6 +6,22 @@ import "google/protobuf/timestamp.proto";
 
 /*
  * ------------------
+ * Codeplug
+ * ------------------
+ */
+message TyteraCodeplug {
+        BasicInformation basic_information = 1;
+        GeneralSettings general_settings = 2;
+        MenuItems menu_items = 3;
+        ButtonDefinitions button_definitions = 4;
+        MessagePresets message_presets = 5;
+        PrivacySettings privacy_settings = 6;
+        EmergencySystems emergency_systems = 7;
+        Contacts contacts = 8;
+}
+
+/*
+ * ------------------
  * Basic Information
  * ------------------
  * https://github.com/yeyus/md380-webtools/wiki/MD389---Basic-Information

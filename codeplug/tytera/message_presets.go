@@ -7,7 +7,7 @@ import (
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
 )
 
-type MessagePresets struct {
+type MessagePresetsGroup struct {
 	EntityID string
 	Base     uint32
 	Length   uint32
@@ -15,8 +15,8 @@ type MessagePresets struct {
 	Messages tytera.MessagePresets
 }
 
-func GetMessagePresets() MessagePresets {
-	m := MessagePresets{
+func GetMessagePresetsGroup() MessagePresetsGroup {
+	m := MessagePresetsGroup{
 		EntityID: "com.tytera.messages",
 		Base:     0x2280,
 		Length:   0x3840,
@@ -40,7 +40,7 @@ func GetMessagePresets() MessagePresets {
 	return m
 }
 
-func (t *MessagePresets) Decode(buf []byte, base uint32) (m map[string]string) {
+func (t *MessagePresetsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
 	m = map[string]string{}
 
 	decoder := t.Decoders[0]

@@ -7,7 +7,7 @@ import (
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
 )
 
-type EmergencySystems struct {
+type EmergencySystemsGroup struct {
 	EntityID string
 	Base     uint32
 	Length   uint32
@@ -15,8 +15,8 @@ type EmergencySystems struct {
 	Systems  tytera.EmergencySystems
 }
 
-func GetEmergencySystems() EmergencySystems {
-	m := EmergencySystems{
+func GetEmergencySystemsGroup() EmergencySystemsGroup {
+	m := EmergencySystemsGroup{
 		EntityID: "com.tytera.emergency",
 		Base:     0x5B70,
 		Length:   0x510,
@@ -62,7 +62,7 @@ func GetEmergencySystems() EmergencySystems {
 	return m
 }
 
-func (t *EmergencySystems) Decode(buf []byte, base uint32) (m map[string]string) {
+func (t *EmergencySystemsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
 	m = map[string]string{}
 	for _, d := range t.Decoders {
 		value := d.Decode(buf, base+t.Base)
@@ -86,7 +86,7 @@ func (t *EmergencySystems) Decode(buf []byte, base uint32) (m map[string]string)
 	return
 }
 
-func (t *EmergencySystems) mapValue(d encoding.Decoder, buf []byte, base uint32) {
+func (t *EmergencySystemsGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {
 	switch id := d.GetEntityID(); id {
 	case "com.tytera.emergency.radioDisableDecode":
 		s := d.Decode(buf, base).(bool)
