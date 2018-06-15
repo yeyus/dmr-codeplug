@@ -1,3 +1,7 @@
+#+CAPTION: Build Status
+#+NAME:   fig:Build Status
+[[https://travis-ci.com/yeyus/dmr-codeplug.svg?branch=master]]
+
 * DMR Codeplug
 
 ** Compile protocol buffers
