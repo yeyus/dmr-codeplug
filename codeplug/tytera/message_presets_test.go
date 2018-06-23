@@ -3,26 +3,11 @@ package tytera
 import (
 	"encoding/json"
 	"fmt"
-	//"github.com/yeyus/dmr-codeplug/proto/tytera"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type messagesTest struct{}
-
-func (messagesTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestMessagePresetsParsing(t *testing.T) {
-	d := messagesTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	mp := GetMessagePresetsGroup()
 
@@ -35,8 +20,7 @@ func TestMessagePresetsParsing(t *testing.T) {
 }
 
 func TestMessagePresetsProto(t *testing.T) {
-	d := messagesTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	mp := GetMessagePresetsGroup()
 

@@ -3,25 +3,11 @@ package tytera
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type biTest struct{}
-
-func (biTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestBasicInformationParsing(t *testing.T) {
-	d := biTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	bi := GetBasicInformationGroup()
 

@@ -3,25 +3,11 @@ package tytera
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type miTest struct{}
-
-func (miTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestMenuItemsParsing(t *testing.T) {
-	d := miTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/04_Oct_2017.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/04_Oct_2017.rdt")
 
 	mi := GetMenuItemsGroup()
 
@@ -36,8 +22,7 @@ func TestMenuItemsParsing(t *testing.T) {
 }
 
 func TestMenuItemsProto(t *testing.T) {
-	d := miTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/04_Oct_2017.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/04_Oct_2017.rdt")
 
 	mi := GetMenuItemsGroup()
 

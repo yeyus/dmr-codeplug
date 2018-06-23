@@ -339,3 +339,19 @@ message RxGroupEntry {
 message RxGroups {
         repeated RxGroupEntry entries = 1;
 }
+
+/*
+ * ---------
+ * Zone List
+ * ---------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Zone-Information
+ */
+
+message ZoneEntry {
+        string name = 1;
+        repeated uint32 channel_index = 2;
+}
+
+message Zones {
+        repeated ZoneEntry entries = 1;
+}

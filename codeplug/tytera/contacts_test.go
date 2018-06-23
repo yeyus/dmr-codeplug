@@ -4,25 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type contactsTest struct{}
-
-func (contactsTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestContactsParsing(t *testing.T) {
-	d := contactsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	cs := GetContactsGroup()
 
@@ -36,8 +22,7 @@ func TestContactsParsing(t *testing.T) {
 }
 
 func TestContactsProto(t *testing.T) {
-	d := contactsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	cs := GetContactsGroup()
 	cs.Decode(content[:], 0x125)

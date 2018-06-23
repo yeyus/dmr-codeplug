@@ -4,25 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type emergencyTest struct{}
-
-func (emergencyTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestEmergencySystemsParsing(t *testing.T) {
-	d := emergencyTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	es := GetEmergencySystemsGroup()
 
@@ -36,8 +22,7 @@ func TestEmergencySystemsParsing(t *testing.T) {
 }
 
 func TestEmergencySystemsProto(t *testing.T) {
-	d := emergencyTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	es := GetEmergencySystemsGroup()
 
@@ -74,8 +59,7 @@ func TestEmergencySystemsProto(t *testing.T) {
 }
 
 func TestEmergencyEntries(t *testing.T) {
-	d := emergencyTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	es := GetEmergencySystemsGroup()
 

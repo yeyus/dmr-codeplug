@@ -4,25 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type buttonsTest struct{}
-
-func (buttonsTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestButtonsParsing(t *testing.T) {
-	d := buttonsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	bs := GetButtonsGroup()
 
@@ -37,8 +23,7 @@ func TestButtonsParsing(t *testing.T) {
 }
 
 func TestButtonsProto(t *testing.T) {
-	d := buttonsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	bs := GetButtonsGroup()
 

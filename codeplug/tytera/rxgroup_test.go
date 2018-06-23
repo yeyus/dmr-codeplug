@@ -3,26 +3,11 @@ package tytera
 import (
 	"encoding/json"
 	"fmt"
-	//"github.com/yeyus/dmr-codeplug/proto/tytera"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type rxGroupsTest struct{}
-
-func (rxGroupsTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestRxGroupsParsing(t *testing.T) {
-	d := rxGroupsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	rg := GetRxGroupListGroup()
 
@@ -36,8 +21,7 @@ func TestRxGroupsParsing(t *testing.T) {
 }
 
 func TestRxGroupsProto(t *testing.T) {
-	d := rxGroupsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	rg := GetRxGroupListGroup()
 	rg.Decode(content[:], 0x125)
@@ -59,19 +43,4 @@ func testRxGroupEntry(t *testing.T, r RxGroupListGroup, idx int, name string, co
 	if len(diff) > 0 {
 		t.Errorf("[idx %d] expected rxgroup groups to be the same, difference is %v", idx, diff)
 	}
-}
-
-func difference(a, b []uint32) (diff []uint32) {
-	m := make(map[uint32]bool)
-
-	for _, item := range b {
-		m[item] = true
-	}
-
-	for _, item := range a {
-		if _, ok := m[item]; !ok {
-			diff = append(diff, item)
-		}
-	}
-	return
 }

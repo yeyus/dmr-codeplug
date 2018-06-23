@@ -3,25 +3,11 @@ package tytera
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type privacyTest struct{}
-
-func (privacyTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestPrivacySettingsParsing(t *testing.T) {
-	d := privacyTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	ps := GetPrivacySettingsGroup()
 
@@ -34,8 +20,7 @@ func TestPrivacySettingsParsing(t *testing.T) {
 }
 
 func TestPrivacySettingsProto(t *testing.T) {
-	d := privacyTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	ps := GetPrivacySettingsGroup()
 
