@@ -48,5 +48,15 @@ func Parse(contents []byte) (tytera.TyteraCodeplug, error) {
 	cs.Decode(contents, 0)
 	codeplug.Contacts = &cs.Contacts
 
+	// RxGroups
+	rxg := GetRxGroupListGroup()
+	rxg.Decode(contents, 0)
+	codeplug.RxGroups = &rxg.Groups
+
+	// Zones
+	zg := GetZonesGroup()
+	zg.Decode(contents, 0)
+	codeplug.Zones = &zg.Zones
+
 	return codeplug, nil
 }

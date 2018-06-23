@@ -18,6 +18,8 @@ message TyteraCodeplug {
         PrivacySettings privacy_settings = 6;
         EmergencySystems emergency_systems = 7;
         Contacts contacts = 8;
+        RxGroups rx_groups = 9;
+        Zones zones = 10;
 }
 
 /*
