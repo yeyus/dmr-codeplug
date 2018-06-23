@@ -42,6 +42,10 @@ func TestContactsProto(t *testing.T) {
 	cs := GetContactsGroup()
 	cs.Decode(content[:], 0x125)
 
+	if len(cs.Contacts.Entries) != 1000 {
+		t.Errorf("expected number of contacts to be 1000, but got %d", len(cs.Contacts.Entries))
+	}
+
 	testContact(t, cs, 0, 2, "Local", true, tytera.CallType_GROUP_CALL)
 	testContact(t, cs, 1, 9, "Hotspot", false, tytera.CallType_PRIVATE_CALL)
 	testContact(t, cs, 2, 0xFFFFFF, "Worldwide", false, tytera.CallType_ALL_CALL)

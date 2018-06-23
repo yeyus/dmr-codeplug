@@ -323,3 +323,19 @@ message ContactEntry {
 message Contacts {
         repeated ContactEntry entries = 1;
 }
+
+/*
+ * ---------------------
+ * Digital RX Group List
+ * ---------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Digital-RX-Group-List
+ */
+
+message RxGroupEntry {
+        string name = 1;
+        repeated uint32 contact_index = 2;
+}
+
+message RxGroups {
+        repeated RxGroupEntry entries = 1;
+}
