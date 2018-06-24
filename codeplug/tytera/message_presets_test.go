@@ -28,8 +28,8 @@ func TestMessagePresetsProto(t *testing.T) {
 
 	messages := mp.Messages.Messages
 
-	if len(messages) != 50 {
-		t.Errorf("number of messages presets should be 50, found %d", len(messages))
+	if len(messages) != 2 {
+		t.Errorf("number of messages presets should be 2, found %d", len(messages))
 	}
 
 	if messages[0] != "Hello" {

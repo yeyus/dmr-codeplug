@@ -26,8 +26,8 @@ func TestRxGroupsProto(t *testing.T) {
 	rg := GetRxGroupListGroup()
 	rg.Decode(content[:], 0x125)
 
-	if len(rg.Groups.Entries) != 250 {
-		t.Errorf("expected number of contacts to be 250, but got %d", len(rg.Groups.Entries))
+	if len(rg.Groups.Entries) != 2 {
+		t.Errorf("expected number of contacts to be 2, but got %d", len(rg.Groups.Entries))
 	}
 
 	testRxGroupEntry(t, rg, 0, "DMR", []uint32{952, 953, 951})

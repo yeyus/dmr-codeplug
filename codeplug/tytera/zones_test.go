@@ -26,8 +26,8 @@ func TestZonesProto(t *testing.T) {
 	rg := GetZonesGroup()
 	rg.Decode(content[:], 0x125)
 
-	if len(rg.Zones.Entries) != 250 {
-		t.Errorf("expected number of zones to be 250, but got %d", len(rg.Zones.Entries))
+	if len(rg.Zones.Entries) != 12 {
+		t.Errorf("expected number of zones to be 12, but got %d", len(rg.Zones.Entries))
 	}
 
 	testZoneEntry(t, rg, 0, "Global", []uint32{1, 2, 3, 4, 5, 76, 77, 78, 67, 68, 69, 70, 71, 72, 73, 74})

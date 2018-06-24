@@ -26,8 +26,8 @@ func TestScanListsProto(t *testing.T) {
 	sl := GetScanListGroup()
 	sl.Decode(content[:], 0x125)
 
-	if len(sl.ScanLists.Entries) != 250 {
-		t.Errorf("expected number of scan lists to be 250, but got %d", len(sl.ScanLists.Entries))
+	if len(sl.ScanLists.Entries) != 2 {
+		t.Errorf("expected number of scan lists to be 2, but got %d", len(sl.ScanLists.Entries))
 	}
 
 	testScanListEntry(t, sl, 0, "Scanlist", 0, 0, 0xFFFF, 500, 2000, []uint32{})

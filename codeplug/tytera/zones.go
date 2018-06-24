@@ -24,12 +24,19 @@ func GetZonesGroup() ZonesGroup {
 		Zones:    tytera.Zones{},
 	}
 
+	predicate := func(entry interface{}) bool {
+		e := entry.(tytera.ZoneEntry)
+
+		return e.Name != ""
+	}
+
 	m.Decoders = []encoding.Decoder{
 		&encoding.RepeatedDecoder{
 			Offset:       0,
 			RecordLength: 0x40,
 			Records:      250,
 			Decoder:      GetZoneEntryDecoder(),
+			Predicate:    predicate,
 		},
 	}
 

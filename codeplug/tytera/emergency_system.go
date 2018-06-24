@@ -23,6 +23,12 @@ func GetEmergencySystemsGroup() EmergencySystemsGroup {
 		Systems:  tytera.EmergencySystems{},
 	}
 
+	predicate := func(entry interface{}) bool {
+		e := entry.(tytera.EmergencySystemEntry)
+
+		return e.SystemName != ""
+	}
+
 	m.Decoders = []encoding.Decoder{
 		&base.BitDecoder{
 			EntityID:  "com.tytera.emergency.radioDisableDecode",
@@ -56,6 +62,7 @@ func GetEmergencySystemsGroup() EmergencySystemsGroup {
 			RecordLength: 0x28,
 			Records:      32,
 			Decoder:      GetEmergencySystemEntry(),
+			Predicate:    predicate,
 		},
 	}
 

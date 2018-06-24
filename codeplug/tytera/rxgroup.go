@@ -24,12 +24,19 @@ func GetRxGroupListGroup() RxGroupListGroup {
 		Groups:   tytera.RxGroups{},
 	}
 
+	predicate := func(entry interface{}) bool {
+		e := entry.(tytera.RxGroupEntry)
+
+		return e.Name != ""
+	}
+
 	m.Decoders = []encoding.Decoder{
 		&encoding.RepeatedDecoder{
 			Offset:       0,
 			RecordLength: 0x60,
 			Records:      250,
 			Decoder:      GetRxGroupEntryDecoder(),
+			Predicate:    predicate,
 		},
 	}
 

@@ -23,6 +23,12 @@ func GetMessagePresetsGroup() MessagePresetsGroup {
 		Messages: tytera.MessagePresets{},
 	}
 
+	predicate := func(entry interface{}) bool {
+		e := entry.(string)
+
+		return e != ""
+	}
+
 	m.Decoders = []encoding.Decoder{
 		&encoding.RepeatedDecoder{
 			Offset:       0,
@@ -34,6 +40,7 @@ func GetMessagePresetsGroup() MessagePresetsGroup {
 				Length:    0x120,
 				Endianess: base.LittleEndian,
 			},
+			Predicate: predicate,
 		},
 	}
 

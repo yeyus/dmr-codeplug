@@ -53,8 +53,8 @@ func TestEmergencySystemsProto(t *testing.T) {
 	}
 
 	// testing entries
-	if len(es.Systems.Entries) != 32 {
-		t.Errorf("expected number of emergency system entries to be 32, got %d", len(es.Systems.Entries))
+	if len(es.Systems.Entries) != 4 {
+		t.Errorf("expected number of emergency system entries to be 4, got %d", len(es.Systems.Entries))
 	}
 }
 

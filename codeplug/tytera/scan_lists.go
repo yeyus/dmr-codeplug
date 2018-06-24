@@ -24,12 +24,22 @@ func GetScanListGroup() ScanListGroup {
 		ScanLists: tytera.ScanLists{},
 	}
 
+	predicate := func(entry interface{}) bool {
+		e := entry.(tytera.ScanListEntry)
+
+		return !(e.Name == "" &&
+			e.PriorityChannel_1 == 0xFFFF &&
+			e.PriorityChannel_2 == 0xFFFF &&
+			e.TxChannel == 0xFFFF)
+	}
+
 	m.Decoders = []encoding.Decoder{
 		&encoding.RepeatedDecoder{
 			Offset:       0,
 			RecordLength: 0x68,
 			Records:      250,
 			Decoder:      GetScanListEntryDecoder(),
+			Predicate:    predicate,
 		},
 	}
 

@@ -24,12 +24,19 @@ func GetContactsGroup() ContactsGroup {
 		Contacts: tytera.Contacts{},
 	}
 
+	predicate := func(entry interface{}) bool {
+		e := entry.(tytera.ContactEntry)
+
+		return !(e.Name == "" && e.Id == 0xFFFFFF && e.CallType == tytera.CallType_CALL_TYPE_NOT_SET)
+	}
+
 	m.Decoders = []encoding.Decoder{
 		&encoding.RepeatedDecoder{
 			Offset:       0,
 			RecordLength: 0x24,
 			Records:      1000,
 			Decoder:      GetContactEntryDecoder(),
+			Predicate:    predicate,
 		},
 	}
 
