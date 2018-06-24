@@ -357,3 +357,24 @@ message ZoneEntry {
 message Zones {
         repeated ZoneEntry entries = 1;
 }
+
+/*
+ * ---------
+ * Scan List
+ * ---------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Scan-List
+ */
+
+message ScanListEntry {
+        string name = 1;
+        uint32 priority_channel_1 = 2;
+        uint32 priority_channel_2 = 3;
+        uint32 tx_channel = 4;
+        uint32 signal_hold_time = 5;
+        uint32 priority_sample_time = 6;
+        repeated uint32 channel_index = 7;
+}
+
+message ScanLists {
+        repeated ScanListEntry entries = 1;
+}
