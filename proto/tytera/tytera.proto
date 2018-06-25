@@ -378,3 +378,127 @@ message ScanListEntry {
 message ScanLists {
         repeated ScanListEntry entries = 1;
 }
+
+/*
+ * --------
+ * Channels
+ * --------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Scan-List
+ */
+
+enum ChannelMode {
+     UNSET_CHANNEL = 0;
+     ANALOG_CHANNEL = 1;
+     DIGITAL_CHANNEL = 2;
+}
+
+enum Bandwidth {
+     NARROW = 0;
+     WIDE = 1;
+}
+
+enum Squelch {
+     TIGHT = 0;
+     NORMAL = 1;
+}
+
+enum Slot {
+     SLOT_NOT_SET = 0;
+     SLOT1 = 1;
+     SLOT2 = 2;
+}
+
+enum CipherSystem {
+     UNSET_CIPHER = 0;
+     BASIC_CIPHER = 1;
+     ENHANCED_CIPHER = 2;
+}
+
+enum ReferenceFrequency {
+     LOW_REFERENCE = 0;
+     MEDIUM_REFERENCE = 1;
+     HIGH_REFERENCE = 2;
+}
+
+enum PowerSetting {
+     LOW_POWER = 0;
+     HIGH_POWER = 1;
+}
+
+enum AdmitCriteria {
+     ADMIT_ALWAYS = 0;
+     CHANNEL_FREE = 1;
+     COLOR_CODE = 2;
+}
+
+enum SignalingSystem {
+     NO_SIGNALING = 0;
+     DTMF_1 = 1;
+     DTMF_2 = 2;
+     DTMF_3 = 3;
+     DTMF_4 = 4;
+}
+
+enum ToneSystem {
+     NO_TONE = 0;
+     CTCSS = 1;
+     DCS_NORMAL = 2;
+     DCS_INVERTED = 3;
+}
+
+message Tone {
+        ToneSystem type = 1;
+        // only for CTCSS (analog), expressed in tenths of Hz
+        uint32 frequency = 2;
+        // only for DCS (digital
+        uint32 code = 3;
+}
+
+message ChannelEntry {
+        ChannelMode mode = 1;
+        Bandwidth bandwidth = 2;
+        bool auto_scan = 3;
+        Squelch squelch = 4;
+        bool lone_worker = 5;
+        bool talkaround = 6;
+        bool rx_only = 7;
+        Slot slot = 8;
+        uint32 color_code = 9;
+        uint32 key_index = 10;
+        CipherSystem privacy_type = 11;
+        bool private_call = 12;
+        bool data_call = 13;
+        ReferenceFrequency rx_ref_frequency = 14;
+        bool emergency_alarm_ack = 15;
+        bool compressed_udp_data_header = 16;
+        bool display_ptt_id = 17;
+        ReferenceFrequency tx_ref_frequency = 18;
+        bool reverse_burst = 19;
+        bool qt_reverse = 20;
+        bool vox = 21;
+        PowerSetting power = 22;
+        AdmitCriteria admit_criteria = 23;
+        uint32 contact = 24;
+        uint32 tot = 25;
+        uint32 tot_rekey_delay = 26;
+        uint32 emergency_system = 27;
+        uint32 scan_list = 28;
+        uint32 rx_group = 29;
+        uint64 rx_frequency = 30;
+        uint64 tx_frequency = 31;
+        Tone decoding_tone = 32;
+        Tone encoding_tone = 33;
+        SignalingSystem rx_signaling = 34;
+        SignalingSystem tx_signaling = 35;
+        string name = 36;
+
+        bool analog_decode_1 = 101;
+        bool analog_decode_2 = 102;
+        bool analog_decode_3 = 103;
+        bool analog_decode_4 = 104;
+        bool analog_decode_5 = 105;
+        bool analog_decode_6 = 106;
+        bool analog_decode_7 = 107;
+        bool analog_decode_8 = 108;
+
+}
