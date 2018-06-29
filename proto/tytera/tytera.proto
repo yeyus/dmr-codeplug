@@ -20,6 +20,8 @@ message TyteraCodeplug {
         Contacts contacts = 8;
         RxGroups rx_groups = 9;
         Zones zones = 10;
+        ScanLists scan_lists = 11;
+        Channels channels = 12;
 }
 
 /*
@@ -403,9 +405,10 @@ enum Squelch {
 }
 
 enum Slot {
-     SLOT_NOT_SET = 0;
+     SLOT_INVALID = 0;
      SLOT1 = 1;
      SLOT2 = 2;
+     SLOT_NOT_SET = 3;
 }
 
 enum CipherSystem {
@@ -500,5 +503,8 @@ message ChannelEntry {
         bool analog_decode_6 = 106;
         bool analog_decode_7 = 107;
         bool analog_decode_8 = 108;
+}
 
+message Channels {
+        repeated ChannelEntry entries = 1;
 }

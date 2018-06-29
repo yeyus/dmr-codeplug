@@ -20,3 +20,5 @@ func TestGeneralSettingsParsing(t *testing.T) {
 
 	fmt.Printf("%+v", gs.GeneralSettings)
 }
+
+// TODO Some comprehensive testing

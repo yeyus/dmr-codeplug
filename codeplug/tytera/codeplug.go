@@ -58,5 +58,19 @@ func Parse(contents []byte) (tytera.TyteraCodeplug, error) {
 	zg.Decode(contents, 0)
 	codeplug.Zones = &zg.Zones
 
+	// Scan Lists
+	sl := GetScanListGroup()
+	sl.Decode(contents, 0)
+	codeplug.ScanLists = &sl.ScanLists
+
+	// TODO Channels
+	chs := GetChannelsGroup()
+	chs.Decode(contents, 0)
+	codeplug.Channels = &chs.Channels
+
+	// TODO DTMF
+
+	// TODO GPS
+
 	return codeplug, nil
 }
