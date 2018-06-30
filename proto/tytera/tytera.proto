@@ -77,6 +77,7 @@ message GeneralSettings {
         uint32 lone_worker_reminder = 19;
         uint32 scan_digital_hang_time = 20;
         uint32 scan_analog_hang_time = 21;
+        uint32 backlight_timeout = 28;
         uint32 keypad_lock = 22;
         OperationMode operation_mode = 23;
         uint32 power_on_password = 24;

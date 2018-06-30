@@ -63,7 +63,7 @@ func Parse(contents []byte) (tytera.TyteraCodeplug, error) {
 	sl.Decode(contents, 0)
 	codeplug.ScanLists = &sl.ScanLists
 
-	// TODO Channels
+	// Channels
 	chs := GetChannelsGroup()
 	chs.Decode(contents, 0)
 	codeplug.Channels = &chs.Channels

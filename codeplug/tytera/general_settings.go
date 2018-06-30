@@ -37,120 +37,124 @@ func GetGeneralSettingsGroup() GeneralSettingsGroup {
 			Endianess: base.LittleEndian,
 		},
 		&base.BitDecoder{
-			EntityID:  "com.tytera.settings.monitorType",
-			Offset:    515 / 8,
-			BitOffset: 7 - (515 % 8),
-		},
-		&base.BitDecoder{
 			EntityID:  "com.tytera.settings.disableLeds",
-			Offset:    517 / 8,
-			BitOffset: 7 - (517 % 8),
-		},
-		&base.BitMaskDecoder{
-			EntityID: "com.tytera.settings.talkPermitTone",
-			Offset:   520 / 8,
-			BitMask:  0xC0,
+			Offset:    64,
+			BitOffset: 2,
 		},
 		&base.BitDecoder{
-			EntityID:  "com.tytera.settings.disablePasswordAndLock",
-			Offset:    522 / 8,
-			BitOffset: 7 - (522 % 8),
-		},
-		&base.BitDecoder{
-			EntityID:  "com.tytera.settings.disableChFreeTone",
-			Offset:    523 / 8,
-			BitOffset: 7 - (523 % 8),
-		},
-		&base.BitDecoder{
-			EntityID:  "com.tytera.settings.disableTones",
-			Offset:    525 / 8,
-			BitOffset: 7 - (525 % 8),
-		},
-		&base.BitDecoder{
-			EntityID:  "com.tytera.settings.batSaveReceiveMode",
-			Offset:    526 / 8,
-			BitOffset: 7 - (526 % 8),
+			EntityID:  "com.tytera.settings.monitorType",
+			Offset:    64,
+			BitOffset: 4,
 		},
 		&base.BitDecoder{
 			EntityID:  "com.tytera.settings.batSavePreamble",
-			Offset:    527 / 8,
-			BitOffset: 7 - (527 % 8),
+			Offset:    65,
+			BitOffset: 0,
+		},
+		&base.BitDecoder{
+			EntityID:  "com.tytera.settings.batSaveReceiveMode",
+			Offset:    65,
+			BitOffset: 1,
+		},
+		&base.BitDecoder{
+			EntityID:  "com.tytera.settings.disableTones",
+			Offset:    65,
+			BitOffset: 2,
+		},
+		&base.BitDecoder{
+			EntityID:  "com.tytera.settings.disableChFreeTone",
+			Offset:    65,
+			BitOffset: 4,
+		},
+		&base.BitDecoder{
+			EntityID:  "com.tytera.settings.disablePasswordAndLock",
+			Offset:    65,
+			BitOffset: 5,
+		},
+		&base.BitMaskDecoder{
+			EntityID: "com.tytera.settings.talkPermitTone",
+			Offset:   65,
+			BitMask:  0xC0,
 		},
 		&base.BitDecoder{
 			EntityID:  "com.tytera.settings.introScreenMode",
-			Offset:    531 / 8,
-			BitOffset: 7 - (531 % 8),
+			Offset:    66,
+			BitOffset: 4,
 		},
 		&base.Uint64Decoder{
 			EntityID:  "com.tytera.settings.radioId",
-			Offset:    544 / 8,
+			Offset:    68,
 			Length:    3,
 			Endianess: base.BigEndian,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.txPreamble",
-			Offset:   576 / 8,
+			Offset:   72,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.groupCallHang",
-			Offset:   584 / 8,
+			Offset:   73,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.privateCallHang",
-			Offset:   592 / 8,
+			Offset:   74,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.voxSensitivity",
-			Offset:   600 / 8,
+			Offset:   75,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.rxLowBattery",
-			Offset:   624 / 8,
+			Offset:   78,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.callAlertTone",
-			Offset:   632 / 8,
+			Offset:   79,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.loneWorkerResponse",
-			Offset:   640 / 8,
+			Offset:   80,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.loneWorkerReminder",
-			Offset:   648 / 8,
+			Offset:   81,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.scanDigitalHangTime",
-			Offset:   664 / 8,
+			Offset:   83,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.scanAnalogHangTime",
-			Offset:   672 / 8,
+			Offset:   84,
+		},
+		&base.ByteDecoder{
+			EntityID: "com.tytera.settings.backlightTimeout",
+			Offset:   85,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.keypadLock",
-			Offset:   688 / 8,
+			Offset:   86,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.settings.operationMode",
-			Offset:   696 / 8,
+			Offset:   87,
 		},
 		&base.BCDDecoder{
 			EntityID:  "com.tytera.settings.powerOnPassword",
-			Offset:    704 / 8,
+			Offset:    88,
 			Length:    4,
 			Endianess: base.BigEndian,
 		},
 		&base.BCDDecoder{
 			EntityID:  "com.tytera.settings.radioProgrammingPassword",
-			Offset:    736 / 8,
+			Offset:    92,
 			Length:    4,
 			Endianess: base.BigEndian,
 		},
 		&base.ASCIIStringDecoder{
 			EntityID: "com.tytera.settings.pcProgrammingPassword",
-			Offset:   704 / 8,
-			Length:   4,
+			Offset:   96,
+			Length:   8,
 		},
 		&base.UTF16StringDecoder{
 			EntityID:  "com.tytera.settings.radioName",
@@ -255,10 +259,17 @@ func (t *GeneralSettingsGroup) mapValue(d encoding.Decoder, buf []byte, base uin
 	case "com.tytera.settings.scanAnalogHangTime":
 		s := d.Decode(buf, base).(uint8)
 		t.GeneralSettings.ScanAnalogHangTime = uint32(s) * 100
+	case "com.tytera.settings.backlightTimeout":
+		s := d.Decode(buf, base).(uint8)
+		t.GeneralSettings.BacklightTimeout = uint32(s) * 5
 	case "com.tytera.settings.keypadLock":
 		s := d.Decode(buf, base).(uint8)
 		// 0xFF is manual
-		t.GeneralSettings.KeypadLock = uint32(s) * 5
+		if s == 0xFF {
+			t.GeneralSettings.KeypadLock = 255
+		} else {
+			t.GeneralSettings.KeypadLock = uint32(s) * 5
+		}
 	case "com.tytera.settings.operationMode":
 		s := d.Decode(buf, base).(uint8)
 		if s == 0 {
@@ -274,7 +285,11 @@ func (t *GeneralSettingsGroup) mapValue(d encoding.Decoder, buf []byte, base uin
 		t.GeneralSettings.RadioProgrammingPassword = uint32(s)
 	case "com.tytera.settings.pcProgrammingPassword":
 		s := d.Decode(buf, base).(string)
-		t.GeneralSettings.PcProgrammingPassword = s
+		if s == "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF" {
+			t.GeneralSettings.PcProgrammingPassword = ""
+		} else {
+			t.GeneralSettings.PcProgrammingPassword = s
+		}
 	case "com.tytera.settings.radioName":
 		s := d.Decode(buf, base).(string)
 		t.GeneralSettings.RadioName = s
