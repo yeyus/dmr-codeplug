@@ -68,7 +68,10 @@ func Parse(contents []byte) (tytera.TyteraCodeplug, error) {
 	chs.Decode(contents, 0)
 	codeplug.Channels = &chs.Channels
 
-	// TODO DTMF
+	// DTMF
+	dt := GetDTMFGroup()
+	dt.Decode(contents, 0)
+	codeplug.Dtmf = &dt.DTMF
 
 	// TODO GPS
 
