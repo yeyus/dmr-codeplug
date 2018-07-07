@@ -68,7 +68,7 @@ func GetBasicInformationGroup() BasicInformationGroup {
 			EntityID:  "com.tytera.basic.hardwareVersion",
 			Offset:    0x34,
 			Length:    4,
-			Endianess: base.LittleEndian,
+			Endianess: base.BigEndian,
 		},
 		&base.ByteDecoder{
 			EntityID: "com.tytera.basic.mcu.variant",

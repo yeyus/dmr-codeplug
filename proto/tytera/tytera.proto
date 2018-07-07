@@ -509,3 +509,77 @@ message ChannelEntry {
 message Channels {
         repeated ChannelEntry entries = 1;
 }
+
+/*
+ * --------
+ * DTMF
+ * --------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Scan-List
+ */
+
+enum ResponseType {
+     GENERAL = 0;
+     KILL = 1;
+     STUN = 2;
+     ACTIVE = 3;
+     UNSTUN = 4;
+}
+
+enum DecodeType {
+     DECODE_TYPE_NONE = 0;
+     SEL_CALL = 1;
+}
+
+enum PttIdType {
+     NO_PTT_ID = 0;
+     PRE_ONLY = 1;
+     POST_ONLY = 2;
+     PRE_AND_POST = 3;
+}
+
+enum GroupCodeType {
+     NO_GROUP_CODE = 0;
+     A = 1;
+     B = 2;
+     C = 3;
+     D = 4;
+     STAR = 5;
+     HASH = 6;
+}
+
+message DTMFSystemEntry {
+        uint32 first_digit_delay = 1;
+        uint32 first_digit_time = 2;
+        uint32 digit_duration_time = 3;
+        uint32 digit_interval_time = 4;
+        uint32 star_hash_digit_time = 6;
+        uint32 d_key_assignment = 7;
+        // it's stored as tenths of whatever unit
+        uint32 next_sequence = 8;
+        uint32 auto_reset_time = 9;
+        bool side_tone = 10;
+        PttIdType ptt_id = 11;
+        GroupCodeType group_code = 12;
+        string key_up_encode = 13;
+        string key_down_encode = 14;
+}
+
+message DTMFDecodeEntry {
+        string dtmf_id = 1;
+        ResponseType response_type = 2;
+        DecodeType decode_type = 3;
+        uint32 ack_encode_index = 4;
+        uint32 ack_delay_time = 5;
+        uint32 revert_channel_index = 6;
+}
+
+message DTMFSettings {
+        // up to 4 entries
+        repeated DTMFSystemEntry systems = 1;
+
+        // up to 32 entries
+        repeated string encodes = 2;
+
+        // up to 8 entries
+        repeated DTMFDecodeEntry decodes = 3;
+}
