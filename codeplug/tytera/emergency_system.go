@@ -1,10 +1,10 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 )
 
 type EmergencySystemsGroup struct {
@@ -15,7 +15,7 @@ type EmergencySystemsGroup struct {
 	Systems  tytera.EmergencySystems
 }
 
-func GetEmergencySystemsGroup() EmergencySystemsGroup {
+func GetEmergencySystemsGroup() *EmergencySystemsGroup {
 	m := EmergencySystemsGroup{
 		EntityID: "com.tytera.emergency",
 		Base:     0x5B70,
@@ -66,31 +66,36 @@ func GetEmergencySystemsGroup() EmergencySystemsGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *EmergencySystemsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *EmergencySystemsGroup) GetEntityID() string {
+	return t.EntityID
+}
+
+func (t *EmergencySystemsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *EmergencySystemsGroup) Decode(buf []byte, base uint32) interface{} {
 	for _, d := range t.Decoders {
 		value := d.Decode(buf, base+t.Base)
 		switch id := d.GetEntityID(); id {
 		case "com.tytera.emergency.entries[%d]":
 			var arr []*tytera.EmergencySystemEntry
-			for k, v := range value.([]interface{}) {
+			for _, v := range value.([]interface{}) {
 				entry := v.(tytera.EmergencySystemEntry)
 				arr = append(arr, &entry)
-				m[fmt.Sprintf(d.GetEntityID(), k)] = fmt.Sprintf("%+v", entry)
 			}
 
 			t.Systems.Entries = arr
 		default:
-			m[id] = fmt.Sprintf("%s", value)
 			t.mapValue(d, buf, base+t.Base)
 		}
 
 	}
 
-	return
+	return t.Systems
 }
 
 func (t *EmergencySystemsGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {

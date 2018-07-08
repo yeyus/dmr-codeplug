@@ -1,7 +1,6 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
@@ -16,7 +15,7 @@ type ChannelsGroup struct {
 	Channels tytera.Channels
 }
 
-func GetChannelsGroup() ChannelsGroup {
+func GetChannelsGroup() *ChannelsGroup {
 	m := ChannelsGroup{
 		EntityID: "com.tytera.channels",
 		Base:     0x1EF00,
@@ -40,25 +39,30 @@ func GetChannelsGroup() ChannelsGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *ChannelsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *ChannelsGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *ChannelsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *ChannelsGroup) Decode(buf []byte, base uint32) interface{} {
 	d := t.Decoders[0]
 	value := d.Decode(buf, base+t.Base)
 
 	var arr []*tytera.ChannelEntry
-	for k, v := range value.([]interface{}) {
+	for _, v := range value.([]interface{}) {
 		entry := v.(tytera.ChannelEntry)
 		arr = append(arr, &entry)
-		m[fmt.Sprintf(d.GetEntityID(), k)] = fmt.Sprintf("%+v", entry)
 	}
 
 	t.Channels.Entries = arr
 
-	return
+	return t.Channels
 }
 
 type ChannelEntryDecoder struct {

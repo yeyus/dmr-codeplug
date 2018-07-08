@@ -1,10 +1,10 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 )
 
 type MessagePresetsGroup struct {
@@ -15,7 +15,7 @@ type MessagePresetsGroup struct {
 	Messages tytera.MessagePresets
 }
 
-func GetMessagePresetsGroup() MessagePresetsGroup {
+func GetMessagePresetsGroup() *MessagePresetsGroup {
 	m := MessagePresetsGroup{
 		EntityID: "com.tytera.messages",
 		Base:     0x2280,
@@ -44,19 +44,23 @@ func GetMessagePresetsGroup() MessagePresetsGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *MessagePresetsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *MessagePresetsGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *MessagePresetsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *MessagePresetsGroup) Decode(buf []byte, base uint32) interface{} {
 	decoder := t.Decoders[0]
 	messages := decoder.Decode(buf, base+t.Base).([]interface{})
-	for i, ms := range messages {
-		id := fmt.Sprintf(decoder.GetEntityID(), i)
-		m[id] = ms.(string)
+	for _, ms := range messages {
 		t.Messages.Messages = append(t.Messages.Messages, ms.(string))
 	}
 
-	return m
+	return t.Messages
 }

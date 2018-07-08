@@ -1,7 +1,6 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
@@ -16,9 +15,9 @@ type ScanListGroup struct {
 	ScanLists tytera.ScanLists
 }
 
-func GetScanListGroup() ScanListGroup {
+func GetScanListGroup() *ScanListGroup {
 	m := ScanListGroup{
-		EntityID:  "com.tytera.scanList",
+		EntityID:  "com.tytera.scanLists",
 		Base:      0x18960,
 		Length:    0x6590,
 		ScanLists: tytera.ScanLists{},
@@ -43,25 +42,30 @@ func GetScanListGroup() ScanListGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *ScanListGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *ScanListGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *ScanListGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *ScanListGroup) Decode(buf []byte, base uint32) interface{} {
 	d := t.Decoders[0]
 	value := d.Decode(buf, base+t.Base)
 
 	var arr []*tytera.ScanListEntry
-	for k, v := range value.([]interface{}) {
+	for _, v := range value.([]interface{}) {
 		entry := v.(tytera.ScanListEntry)
 		arr = append(arr, &entry)
-		m[fmt.Sprintf(d.GetEntityID(), k)] = fmt.Sprintf("%+v", entry)
 	}
 
 	t.ScanLists.Entries = arr
 
-	return
+	return t.ScanLists
 }
 
 type ScanListEntryDecoder struct {
@@ -72,7 +76,7 @@ type ScanListEntryDecoder struct {
 
 func GetScanListEntryDecoder() ScanListEntryDecoder {
 	m := ScanListEntryDecoder{
-		EntityID: "com.tytera.scanList[%d]",
+		EntityID: "com.tytera.scanLists[%d]",
 		Entry:    tytera.ScanListEntry{},
 	}
 

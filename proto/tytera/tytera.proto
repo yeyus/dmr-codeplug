@@ -315,7 +315,7 @@ message EmergencySystems {
 enum CallType {
      CALL_TYPE_NOT_SET = 0;
      GROUP_CALL = 1;
-     PRIVATE_CALL = 2;
+     PRIVATE_CALL = 10;
      ALL_CALL = 3;
 }
 

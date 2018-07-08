@@ -123,7 +123,7 @@ func TestChannelsProto(t *testing.T) {
 	})
 }
 
-func compareChannel(t *testing.T, c ChannelsGroup, idx int, x tytera.ChannelEntry) {
+func compareChannel(t *testing.T, c *ChannelsGroup, idx int, x tytera.ChannelEntry) {
 	var a tytera.ChannelEntry = *c.Channels.Entries[idx]
 
 	if !reflect.DeepEqual(a, x) {

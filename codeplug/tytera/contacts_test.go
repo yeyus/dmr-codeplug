@@ -40,7 +40,7 @@ func TestContactsProto(t *testing.T) {
 
 }
 
-func testContact(t *testing.T, c ContactsGroup, idx int, id uint32, name string, callTone bool, callType tytera.CallType) {
+func testContact(t *testing.T, c *ContactsGroup, idx int, id uint32, name string, callTone bool, callType tytera.CallType) {
 	entry := c.Contacts.Entries[idx]
 	if entry.Id != id {
 		t.Errorf("[idx %d] expected contact id to be %d, but got %d", idx, id, entry.Id)

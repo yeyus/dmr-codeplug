@@ -33,7 +33,7 @@ func TestRxGroupsProto(t *testing.T) {
 	testRxGroupEntry(t, rg, 0, "DMR", []uint32{952, 953, 951})
 }
 
-func testRxGroupEntry(t *testing.T, r RxGroupListGroup, idx int, name string, contacts []uint32) {
+func testRxGroupEntry(t *testing.T, r *RxGroupListGroup, idx int, name string, contacts []uint32) {
 	entry := r.Groups.Entries[idx]
 	if entry.Name != name {
 		t.Errorf("[idx %d] expected rxgroup name to be %s, but got %s", idx, name, entry.Name)

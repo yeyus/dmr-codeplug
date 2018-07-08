@@ -78,7 +78,7 @@ func TestDTMFSystemProto(t *testing.T) {
 
 }
 
-func compareSystemEntry(t *testing.T, dg DTMFGroup, idx int, x tytera.DTMFSystemEntry) {
+func compareSystemEntry(t *testing.T, dg *DTMFGroup, idx int, x tytera.DTMFSystemEntry) {
 	var a tytera.DTMFSystemEntry = *dg.DTMF.Systems[idx]
 
 	if !reflect.DeepEqual(a, x) {
@@ -140,7 +140,7 @@ func TestDTMFDecodeProto(t *testing.T) {
 	})
 }
 
-func compareDecodeEntry(t *testing.T, dg DTMFGroup, idx int, x tytera.DTMFDecodeEntry) {
+func compareDecodeEntry(t *testing.T, dg *DTMFGroup, idx int, x tytera.DTMFDecodeEntry) {
 	var a tytera.DTMFDecodeEntry = *dg.DTMF.Decodes[idx]
 
 	if !reflect.DeepEqual(a, x) {

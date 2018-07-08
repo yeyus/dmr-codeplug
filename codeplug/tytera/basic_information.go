@@ -6,6 +6,7 @@ import (
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 	"strconv"
 	"time"
 )
@@ -18,7 +19,7 @@ type BasicInformationGroup struct {
 	BasicInformation tytera.BasicInformation
 }
 
-func GetBasicInformationGroup() BasicInformationGroup {
+func GetBasicInformationGroup() *BasicInformationGroup {
 	b := BasicInformationGroup{
 		EntityID:         "com.tytera.basic",
 		Base:             0x210B,
@@ -105,18 +106,23 @@ func GetBasicInformationGroup() BasicInformationGroup {
 		},
 	}
 
-	return b
+	return &b
 }
 
-func (t *BasicInformationGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *BasicInformationGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *BasicInformationGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *BasicInformationGroup) Decode(buf []byte, base uint32) interface{} {
 	for _, d := range t.Decoders {
-		m[d.GetEntityID()] = fmt.Sprintf("%s", d.Decode(buf, base))
 		t.mapValue(d, buf, base)
 	}
 
-	return
+	return t.BasicInformation
 }
 
 func (t *BasicInformationGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {

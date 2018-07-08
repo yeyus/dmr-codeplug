@@ -34,7 +34,7 @@ func TestScanListsProto(t *testing.T) {
 	testScanListEntry(t, sl, 1, "Unit Test", 22, 2, 76, 700, 2750, []uint32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31})
 }
 
-func testScanListEntry(t *testing.T, r ScanListGroup, idx int, name string, pc1 uint32, pc2 uint32, tx uint32, holdTime uint32, sampleTime uint32, channels []uint32) {
+func testScanListEntry(t *testing.T, r *ScanListGroup, idx int, name string, pc1 uint32, pc2 uint32, tx uint32, holdTime uint32, sampleTime uint32, channels []uint32) {
 	entry := r.ScanLists.Entries[idx]
 	if entry.Name != name {
 		t.Errorf("[idx %d] expected scan list name to be %s, but got %s", idx, name, entry.Name)

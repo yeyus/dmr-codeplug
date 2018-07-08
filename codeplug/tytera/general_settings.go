@@ -1,10 +1,10 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 )
 
 type GeneralSettingsGroup struct {
@@ -15,7 +15,7 @@ type GeneralSettingsGroup struct {
 	GeneralSettings tytera.GeneralSettings
 }
 
-func GetGeneralSettingsGroup() GeneralSettingsGroup {
+func GetGeneralSettingsGroup() *GeneralSettingsGroup {
 	g := GeneralSettingsGroup{
 		EntityID:        "com.tytera.settings",
 		Base:            0x2140,
@@ -164,17 +164,23 @@ func GetGeneralSettingsGroup() GeneralSettingsGroup {
 		},
 	}
 
-	return g
+	return &g
 }
 
-func (t *GeneralSettingsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *GeneralSettingsGroup) GetEntityID() string {
+	return t.EntityID
+}
+
+func (t *GeneralSettingsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *GeneralSettingsGroup) Decode(buf []byte, base uint32) interface{} {
 	for _, d := range t.Decoders {
-		m[d.GetEntityID()] = fmt.Sprintf("%s", d.Decode(buf, base+t.Base))
 		t.mapValue(d, buf, base+t.Base)
 	}
 
-	return
+	return t.GeneralSettings
 }
 
 func (t *GeneralSettingsGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {

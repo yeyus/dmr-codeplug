@@ -44,7 +44,7 @@ func TestZonesProto(t *testing.T) {
 	testZoneEntry(t, rg, 11, "BM Region 9", []uint32{2, 35, 65, 38, 39, 76, 77, 78, 67, 68, 69, 70, 71, 72, 73, 74})
 }
 
-func testZoneEntry(t *testing.T, r ZonesGroup, idx int, name string, channels []uint32) {
+func testZoneEntry(t *testing.T, r *ZonesGroup, idx int, name string, channels []uint32) {
 	entry := r.Zones.Entries[idx]
 	if entry.Name != name {
 		t.Errorf("[idx %d] expected zone name to be %s, but got %s", idx, name, entry.Name)

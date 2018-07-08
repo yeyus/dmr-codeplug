@@ -1,7 +1,6 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
@@ -16,7 +15,7 @@ type ZonesGroup struct {
 	Zones    tytera.Zones
 }
 
-func GetZonesGroup() ZonesGroup {
+func GetZonesGroup() *ZonesGroup {
 	m := ZonesGroup{
 		EntityID: "com.tytera.zones",
 		Base:     0x14AE0,
@@ -40,25 +39,30 @@ func GetZonesGroup() ZonesGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *ZonesGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *ZonesGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *ZonesGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *ZonesGroup) Decode(buf []byte, base uint32) interface{} {
 	d := t.Decoders[0]
 	value := d.Decode(buf, base+t.Base)
 
 	var arr []*tytera.ZoneEntry
-	for k, v := range value.([]interface{}) {
+	for _, v := range value.([]interface{}) {
 		entry := v.(tytera.ZoneEntry)
 		arr = append(arr, &entry)
-		m[fmt.Sprintf(d.GetEntityID(), k)] = fmt.Sprintf("%+v", entry)
 	}
 
 	t.Zones.Entries = arr
 
-	return
+	return t.Zones
 }
 
 type ZoneEntryDecoder struct {

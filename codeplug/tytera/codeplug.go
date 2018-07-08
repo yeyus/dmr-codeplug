@@ -1,79 +1,104 @@
 package tytera
 
 import (
+	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 )
 
-func Parse(contents []byte) (tytera.TyteraCodeplug, error) {
+type MD380Codeplug struct {
+	EntityID string
+	Base     uint32
+	Length   uint32
+	Decoders []encoding.Decoder
+	Codeplug tytera.TyteraCodeplug
+}
 
-	codeplug := tytera.TyteraCodeplug{}
+func GetMD380Codeplug() MD380Codeplug {
 
-	// Basic Information
-	bi := GetBasicInformationGroup()
-	bi.Decode(contents, 0)
-	codeplug.BasicInformation = &bi.BasicInformation
+	c := MD380Codeplug{
+		EntityID: "com.tytera",
+		Base:     0,
+		Length:   0x40100,
+		Codeplug: tytera.TyteraCodeplug{},
+	}
 
-	// General Settings
-	gs := GetGeneralSettingsGroup()
-	gs.Decode(contents, 0)
-	codeplug.GeneralSettings = &gs.GeneralSettings
+	c.Decoders = []encoding.Decoder{
+		GetBasicInformationGroup(),
+		GetGeneralSettingsGroup(),
+		GetMenuItemsGroup(),
+		GetButtonsGroup(),
+		GetMessagePresetsGroup(),
+		GetPrivacySettingsGroup(),
+		GetEmergencySystemsGroup(),
+		GetContactsGroup(),
+		GetRxGroupListGroup(),
+		GetZonesGroup(),
+		GetScanListGroup(),
+		GetChannelsGroup(),
+		GetDTMFGroup(),
+		// TODO GPS
+	}
 
-	// Menu Items
-	mi := GetMenuItemsGroup()
-	mi.Decode(contents, 0)
-	codeplug.MenuItems = &mi.MenuItems
+	return c
+}
 
-	// Button Definitions
-	bd := GetButtonsGroup()
-	bd.Decode(contents, 0)
-	codeplug.ButtonDefinitions = &bd.Buttons
+func (c *MD380Codeplug) Decode(buf []byte, base uint32) interface{} {
+	for _, d := range c.Decoders {
+		c.mapValue(d, buf, base)
+	}
 
-	// Message Presets
-	mp := GetMessagePresetsGroup()
-	mp.Decode(contents, 0)
-	codeplug.MessagePresets = &mp.Messages
+	return c.Codeplug
+}
 
-	// Privacy Settings
-	ps := GetPrivacySettingsGroup()
-	ps.Decode(contents, 0)
-	codeplug.PrivacySettings = &ps.Privacy
+func (c *MD380Codeplug) GetEntityID() string {
+	return c.EntityID
+}
 
-	// Emergency Systems
-	es := GetEmergencySystemsGroup()
-	es.Decode(contents, 0)
-	codeplug.EmergencySystems = &es.Systems
+func (c *MD380Codeplug) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
 
-	// Contacts
-	cs := GetContactsGroup()
-	cs.Decode(contents, 0)
-	codeplug.Contacts = &cs.Contacts
-
-	// RxGroups
-	rxg := GetRxGroupListGroup()
-	rxg.Decode(contents, 0)
-	codeplug.RxGroups = &rxg.Groups
-
-	// Zones
-	zg := GetZonesGroup()
-	zg.Decode(contents, 0)
-	codeplug.Zones = &zg.Zones
-
-	// Scan Lists
-	sl := GetScanListGroup()
-	sl.Decode(contents, 0)
-	codeplug.ScanLists = &sl.ScanLists
-
-	// Channels
-	chs := GetChannelsGroup()
-	chs.Decode(contents, 0)
-	codeplug.Channels = &chs.Channels
-
-	// DTMF
-	dt := GetDTMFGroup()
-	dt.Decode(contents, 0)
-	codeplug.Dtmf = &dt.DTMF
-
-	// TODO GPS
-
-	return codeplug, nil
+func (c *MD380Codeplug) mapValue(d encoding.Decoder, buf []byte, base uint32) {
+	switch id := d.GetEntityID(); id {
+	case "com.tytera.basic":
+		s := d.Decode(buf, base).(tytera.BasicInformation)
+		c.Codeplug.BasicInformation = &s
+	case "com.tytera.settings":
+		s := d.Decode(buf, base).(tytera.GeneralSettings)
+		c.Codeplug.GeneralSettings = &s
+	case "com.tytera.menuItems":
+		s := d.Decode(buf, base).(tytera.MenuItems)
+		c.Codeplug.MenuItems = &s
+	case "com.tytera.buttons":
+		s := d.Decode(buf, base).(tytera.ButtonDefinitions)
+		c.Codeplug.ButtonDefinitions = &s
+	case "com.tytera.messages":
+		s := d.Decode(buf, base).(tytera.MessagePresets)
+		c.Codeplug.MessagePresets = &s
+	case "com.tytera.privacy":
+		s := d.Decode(buf, base).(tytera.PrivacySettings)
+		c.Codeplug.PrivacySettings = &s
+	case "com.tytera.emergency":
+		s := d.Decode(buf, base).(tytera.EmergencySystems)
+		c.Codeplug.EmergencySystems = &s
+	case "com.tytera.contacts":
+		s := d.Decode(buf, base).(tytera.Contacts)
+		c.Codeplug.Contacts = &s
+	case "com.tytera.rxGroup":
+		s := d.Decode(buf, base).(tytera.RxGroups)
+		c.Codeplug.RxGroups = &s
+	case "com.tytera.zones":
+		s := d.Decode(buf, base).(tytera.Zones)
+		c.Codeplug.Zones = &s
+	case "com.tytera.scanLists":
+		s := d.Decode(buf, base).(tytera.ScanLists)
+		c.Codeplug.ScanLists = &s
+	case "com.tytera.channels":
+		s := d.Decode(buf, base).(tytera.Channels)
+		c.Codeplug.Channels = &s
+	case "com.tytera.dtmf":
+		s := d.Decode(buf, base).(tytera.DTMFSettings)
+		c.Codeplug.Dtmf = &s
+	}
 }

@@ -1,7 +1,6 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
@@ -16,7 +15,7 @@ type RxGroupListGroup struct {
 	Groups   tytera.RxGroups
 }
 
-func GetRxGroupListGroup() RxGroupListGroup {
+func GetRxGroupListGroup() *RxGroupListGroup {
 	m := RxGroupListGroup{
 		EntityID: "com.tytera.rxGroup",
 		Base:     0xED20,
@@ -40,25 +39,30 @@ func GetRxGroupListGroup() RxGroupListGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *RxGroupListGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *RxGroupListGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *RxGroupListGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *RxGroupListGroup) Decode(buf []byte, base uint32) interface{} {
 	d := t.Decoders[0]
 	value := d.Decode(buf, base+t.Base)
 
 	var arr []*tytera.RxGroupEntry
-	for k, v := range value.([]interface{}) {
+	for _, v := range value.([]interface{}) {
 		entry := v.(tytera.RxGroupEntry)
 		arr = append(arr, &entry)
-		m[fmt.Sprintf(d.GetEntityID(), k)] = fmt.Sprintf("%+v", entry)
 	}
 
 	t.Groups.Entries = arr
 
-	return
+	return t.Groups
 }
 
 type RxGroupEntryDecoder struct {
