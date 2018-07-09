@@ -1,7 +1,6 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
@@ -16,12 +15,18 @@ type ContactsGroup struct {
 	Contacts tytera.Contacts
 }
 
-func GetContactsGroup() ContactsGroup {
+func GetContactsGroup() *ContactsGroup {
 	m := ContactsGroup{
 		EntityID: "com.tytera.contacts",
 		Base:     0x6080,
 		Length:   0x8CA0,
 		Contacts: tytera.Contacts{},
+	}
+
+	predicate := func(entry interface{}) bool {
+		e := entry.(tytera.ContactEntry)
+
+		return !(e.Name == "" && e.Id == 0xFFFFFF && e.CallType == tytera.CallType_CALL_TYPE_NOT_SET)
 	}
 
 	m.Decoders = []encoding.Decoder{
@@ -30,28 +35,34 @@ func GetContactsGroup() ContactsGroup {
 			RecordLength: 0x24,
 			Records:      1000,
 			Decoder:      GetContactEntryDecoder(),
+			Predicate:    predicate,
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *ContactsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *ContactsGroup) GetEntityID() string {
+	return t.EntityID
+}
 
+func (t *ContactsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *ContactsGroup) Decode(buf []byte, base uint32) interface{} {
 	d := t.Decoders[0]
 	value := d.Decode(buf, base+t.Base)
 
 	var arr []*tytera.ContactEntry
-	for k, v := range value.([]interface{}) {
+	for _, v := range value.([]interface{}) {
 		entry := v.(tytera.ContactEntry)
 		arr = append(arr, &entry)
-		m[fmt.Sprintf(d.GetEntityID(), k)] = fmt.Sprintf("%+v", entry)
 	}
 
 	t.Contacts.Entries = arr
 
-	return
+	return t.Contacts
 }
 
 type ContactEntryDecoder struct {

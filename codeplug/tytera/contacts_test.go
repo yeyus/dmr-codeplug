@@ -4,25 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
-	"io/ioutil"
-	"log"
 	"testing"
 )
 
-type contactsTest struct{}
-
-func (contactsTest) getRDTBytes(file string) []byte {
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return content
-}
-
 func TestContactsParsing(t *testing.T) {
-	d := contactsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	cs := GetContactsGroup()
 
@@ -36,11 +22,14 @@ func TestContactsParsing(t *testing.T) {
 }
 
 func TestContactsProto(t *testing.T) {
-	d := contactsTest{}
-	content := d.getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
+	content := getRDTBytes("../../packing/tytera/testdata/usa_codeplug.rdt")
 
 	cs := GetContactsGroup()
 	cs.Decode(content[:], 0x125)
+
+	if len(cs.Contacts.Entries) != 78 {
+		t.Errorf("expected number of contacts to be 78, but got %d", len(cs.Contacts.Entries))
+	}
 
 	testContact(t, cs, 0, 2, "Local", true, tytera.CallType_GROUP_CALL)
 	testContact(t, cs, 1, 9, "Hotspot", false, tytera.CallType_PRIVATE_CALL)
@@ -51,7 +40,7 @@ func TestContactsProto(t *testing.T) {
 
 }
 
-func testContact(t *testing.T, c ContactsGroup, idx int, id uint32, name string, callTone bool, callType tytera.CallType) {
+func testContact(t *testing.T, c *ContactsGroup, idx int, id uint32, name string, callTone bool, callType tytera.CallType) {
 	entry := c.Contacts.Entries[idx]
 	if entry.Id != id {
 		t.Errorf("[idx %d] expected contact id to be %d, but got %d", idx, id, entry.Id)

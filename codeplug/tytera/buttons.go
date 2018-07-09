@@ -1,10 +1,10 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 )
 
 type ButtonsGroup struct {
@@ -15,7 +15,7 @@ type ButtonsGroup struct {
 	Buttons  tytera.ButtonDefinitions
 }
 
-func GetButtonsGroup() ButtonsGroup {
+func GetButtonsGroup() *ButtonsGroup {
 	m := ButtonsGroup{
 		EntityID: "com.tytera.buttons",
 		Base:     0x2202,
@@ -112,17 +112,23 @@ func GetButtonsGroup() ButtonsGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *ButtonsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *ButtonsGroup) GetEntityID() string {
+	return t.EntityID
+}
+
+func (t *ButtonsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *ButtonsGroup) Decode(buf []byte, base uint32) interface{} {
 	for _, d := range t.Decoders {
-		m[d.GetEntityID()] = fmt.Sprintf("%s", d.Decode(buf, base+t.Base))
 		t.mapValue(d, buf, base+t.Base)
 	}
 
-	return
+	return t.Buttons
 }
 
 func (t *ButtonsGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {

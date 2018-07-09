@@ -18,6 +18,11 @@ message TyteraCodeplug {
         PrivacySettings privacy_settings = 6;
         EmergencySystems emergency_systems = 7;
         Contacts contacts = 8;
+        RxGroups rx_groups = 9;
+        Zones zones = 10;
+        ScanLists scan_lists = 11;
+        Channels channels = 12;
+        DTMFSettings dtmf = 13;
 }
 
 /*
@@ -73,6 +78,7 @@ message GeneralSettings {
         uint32 lone_worker_reminder = 19;
         uint32 scan_digital_hang_time = 20;
         uint32 scan_analog_hang_time = 21;
+        uint32 backlight_timeout = 28;
         uint32 keypad_lock = 22;
         OperationMode operation_mode = 23;
         uint32 power_on_password = 24;
@@ -309,7 +315,7 @@ message EmergencySystems {
 enum CallType {
      CALL_TYPE_NOT_SET = 0;
      GROUP_CALL = 1;
-     PRIVATE_CALL = 2;
+     PRIVATE_CALL = 10;
      ALL_CALL = 3;
 }
 
@@ -322,4 +328,259 @@ message ContactEntry {
 
 message Contacts {
         repeated ContactEntry entries = 1;
+}
+
+/*
+ * ---------------------
+ * Digital RX Group List
+ * ---------------------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Digital-RX-Group-List
+ */
+
+message RxGroupEntry {
+        string name = 1;
+        repeated uint32 contact_index = 2;
+}
+
+message RxGroups {
+        repeated RxGroupEntry entries = 1;
+}
+
+/*
+ * ---------
+ * Zone List
+ * ---------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Zone-Information
+ */
+
+message ZoneEntry {
+        string name = 1;
+        repeated uint32 channel_index = 2;
+}
+
+message Zones {
+        repeated ZoneEntry entries = 1;
+}
+
+/*
+ * ---------
+ * Scan List
+ * ---------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Scan-List
+ */
+
+message ScanListEntry {
+        string name = 1;
+        uint32 priority_channel_1 = 2;
+        uint32 priority_channel_2 = 3;
+        uint32 tx_channel = 4;
+        uint32 signal_hold_time = 5;
+        uint32 priority_sample_time = 6;
+        repeated uint32 channel_index = 7;
+}
+
+message ScanLists {
+        repeated ScanListEntry entries = 1;
+}
+
+/*
+ * --------
+ * Channels
+ * --------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Scan-List
+ */
+
+enum ChannelMode {
+     UNSET_CHANNEL = 0;
+     ANALOG_CHANNEL = 1;
+     DIGITAL_CHANNEL = 2;
+}
+
+enum Bandwidth {
+     NARROW = 0;
+     WIDE = 1;
+}
+
+enum Squelch {
+     TIGHT = 0;
+     NORMAL = 1;
+}
+
+enum Slot {
+     SLOT_INVALID = 0;
+     SLOT1 = 1;
+     SLOT2 = 2;
+     SLOT_NOT_SET = 3;
+}
+
+enum CipherSystem {
+     UNSET_CIPHER = 0;
+     BASIC_CIPHER = 1;
+     ENHANCED_CIPHER = 2;
+}
+
+enum ReferenceFrequency {
+     LOW_REFERENCE = 0;
+     MEDIUM_REFERENCE = 1;
+     HIGH_REFERENCE = 2;
+}
+
+enum PowerSetting {
+     LOW_POWER = 0;
+     HIGH_POWER = 1;
+}
+
+enum AdmitCriteria {
+     ADMIT_ALWAYS = 0;
+     CHANNEL_FREE = 1;
+     COLOR_CODE = 2;
+}
+
+enum SignalingSystem {
+     NO_SIGNALING = 0;
+     DTMF_1 = 1;
+     DTMF_2 = 2;
+     DTMF_3 = 3;
+     DTMF_4 = 4;
+}
+
+enum ToneSystem {
+     NO_TONE = 0;
+     CTCSS = 1;
+     DCS_NORMAL = 2;
+     DCS_INVERTED = 3;
+}
+
+message Tone {
+        ToneSystem type = 1;
+        // only for CTCSS (analog), expressed in tenths of Hz
+        uint32 frequency = 2;
+        // only for DCS (digital
+        uint32 code = 3;
+}
+
+message ChannelEntry {
+        ChannelMode mode = 1;
+        Bandwidth bandwidth = 2;
+        bool auto_scan = 3;
+        Squelch squelch = 4;
+        bool lone_worker = 5;
+        bool talkaround = 6;
+        bool rx_only = 7;
+        Slot slot = 8;
+        uint32 color_code = 9;
+        uint32 key_index = 10;
+        CipherSystem privacy_type = 11;
+        bool private_call = 12;
+        bool data_call = 13;
+        ReferenceFrequency rx_ref_frequency = 14;
+        bool emergency_alarm_ack = 15;
+        bool compressed_udp_data_header = 16;
+        bool display_ptt_id = 17;
+        ReferenceFrequency tx_ref_frequency = 18;
+        bool reverse_burst = 19;
+        bool qt_reverse = 20;
+        bool vox = 21;
+        PowerSetting power = 22;
+        AdmitCriteria admit_criteria = 23;
+        uint32 contact = 24;
+        uint32 tot = 25;
+        uint32 tot_rekey_delay = 26;
+        uint32 emergency_system = 27;
+        uint32 scan_list = 28;
+        uint32 rx_group = 29;
+        uint64 rx_frequency = 30;
+        uint64 tx_frequency = 31;
+        Tone decoding_tone = 32;
+        Tone encoding_tone = 33;
+        SignalingSystem rx_signaling = 34;
+        SignalingSystem tx_signaling = 35;
+        string name = 36;
+
+        bool analog_decode_1 = 101;
+        bool analog_decode_2 = 102;
+        bool analog_decode_3 = 103;
+        bool analog_decode_4 = 104;
+        bool analog_decode_5 = 105;
+        bool analog_decode_6 = 106;
+        bool analog_decode_7 = 107;
+        bool analog_decode_8 = 108;
+}
+
+message Channels {
+        repeated ChannelEntry entries = 1;
+}
+
+/*
+ * --------
+ * DTMF
+ * --------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389---Scan-List
+ */
+
+enum ResponseType {
+     GENERAL = 0;
+     KILL = 1;
+     STUN = 2;
+     ACTIVE = 3;
+     UNSTUN = 4;
+}
+
+enum DecodeType {
+     DECODE_TYPE_NONE = 0;
+     SEL_CALL = 1;
+}
+
+enum PttIdType {
+     NO_PTT_ID = 0;
+     PRE_ONLY = 1;
+     POST_ONLY = 2;
+     PRE_AND_POST = 3;
+}
+
+enum GroupCodeType {
+     NO_GROUP_CODE = 0;
+     A = 1;
+     B = 2;
+     C = 3;
+     D = 4;
+     STAR = 5;
+     HASH = 6;
+}
+
+message DTMFSystemEntry {
+        uint32 first_digit_delay = 1;
+        uint32 first_digit_time = 2;
+        uint32 digit_duration_time = 3;
+        uint32 digit_interval_time = 4;
+        uint32 star_hash_digit_time = 6;
+        uint32 d_key_assignment = 7;
+        // it's stored as tenths of whatever unit
+        uint32 next_sequence = 8;
+        uint32 auto_reset_time = 9;
+        bool side_tone = 10;
+        PttIdType ptt_id = 11;
+        GroupCodeType group_code = 12;
+        string key_up_encode = 13;
+        string key_down_encode = 14;
+}
+
+message DTMFDecodeEntry {
+        string dtmf_id = 1;
+        ResponseType response_type = 2;
+        DecodeType decode_type = 3;
+        uint32 ack_encode_index = 4;
+        uint32 ack_delay_time = 5;
+        uint32 revert_channel_index = 6;
+}
+
+message DTMFSettings {
+        // up to 4 entries
+        repeated DTMFSystemEntry systems = 1;
+
+        // up to 32 entries
+        repeated string encodes = 2;
+
+        // up to 8 entries
+        repeated DTMFDecodeEntry decodes = 3;
 }

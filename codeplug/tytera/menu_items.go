@@ -1,10 +1,10 @@
 package tytera
 
 import (
-	"fmt"
 	"github.com/yeyus/dmr-codeplug/encoding"
 	"github.com/yeyus/dmr-codeplug/encoding/base"
 	"github.com/yeyus/dmr-codeplug/proto/tytera"
+	"go/types"
 )
 
 type MenuItemsGroup struct {
@@ -15,7 +15,7 @@ type MenuItemsGroup struct {
 	MenuItems tytera.MenuItems
 }
 
-func GetMenuItemsGroup() MenuItemsGroup {
+func GetMenuItemsGroup() *MenuItemsGroup {
 	m := MenuItemsGroup{
 		EntityID: "com.tytera.menuItems",
 		Base:     0x21F0,
@@ -170,17 +170,23 @@ func GetMenuItemsGroup() MenuItemsGroup {
 		},
 	}
 
-	return m
+	return &m
 }
 
-func (t *MenuItemsGroup) Decode(buf []byte, base uint32) (m map[string]string) {
-	m = map[string]string{}
+func (t *MenuItemsGroup) GetEntityID() string {
+	return t.EntityID
+}
+
+func (t *MenuItemsGroup) GetEntityType() types.BasicKind {
+	return types.UnsafePointer
+}
+
+func (t *MenuItemsGroup) Decode(buf []byte, base uint32) interface{} {
 	for _, d := range t.Decoders {
-		m[d.GetEntityID()] = fmt.Sprintf("%s", d.Decode(buf, base+t.Base))
 		t.mapValue(d, buf, base+t.Base)
 	}
 
-	return
+	return t.MenuItems
 }
 
 func (t *MenuItemsGroup) mapValue(d encoding.Decoder, buf []byte, base uint32) {

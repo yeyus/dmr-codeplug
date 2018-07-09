@@ -27,7 +27,7 @@ func (t *BitDecoder) Decode(buf []byte, base uint32) interface{} {
 
 	s := buf[base+t.Offset : base+t.Offset+1]
 
-	if (s[0]>>t.BitOffset)&1 > 0 {
+	if (s[0]>>t.BitOffset)&1 == 1 {
 		return true
 	} else {
 		return false
