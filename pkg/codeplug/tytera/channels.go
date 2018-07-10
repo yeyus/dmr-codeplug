@@ -219,6 +219,10 @@ func GetChannelEntryDecoder() ChannelEntryDecoder {
 			EntityID: "rxGroup",
 			Offset:   12,
 		},
+		&base.ByteDecoder{
+			EntityID: "gps",
+			Offset:   13,
+		},
 		&base.BitDecoder{
 			EntityID:  "analog1",
 			Offset:    14,
@@ -415,6 +419,9 @@ func (t *ChannelEntryDecoder) mapValue(d encoding.Decoder, buf []byte, base uint
 	case "rxGroup":
 		s := d.Decode(buf, base).(uint8)
 		t.Entry.RxGroup = uint32(s)
+	case "gps":
+		s := d.Decode(buf, base).(uint8)
+		t.Entry.Gps = uint32(s)
 	case "analog1":
 		s := d.Decode(buf, base).(bool)
 		t.Entry.AnalogDecode_1 = s
