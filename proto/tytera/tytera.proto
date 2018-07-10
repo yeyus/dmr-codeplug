@@ -23,6 +23,7 @@ message TyteraCodeplug {
         ScanLists scan_lists = 11;
         Channels channels = 12;
         DTMFSettings dtmf = 13;
+        GPSSystems gps = 14;
 }
 
 /*
@@ -496,6 +497,7 @@ message ChannelEntry {
         SignalingSystem rx_signaling = 34;
         SignalingSystem tx_signaling = 35;
         string name = 36;
+        uint32 gps = 37;
 
         bool analog_decode_1 = 101;
         bool analog_decode_2 = 102;
@@ -583,4 +585,21 @@ message DTMFSettings {
 
         // up to 8 entries
         repeated DTMFDecodeEntry decodes = 3;
+}
+
+/*
+ * --------
+ * GPS
+ * --------
+ * https://github.com/yeyus/md380-webtools/wiki/MD389G---GPS-System
+ */
+
+message GPSSystemEntry {
+        uint32 revert_channel_index = 1;
+        uint32 report_interval = 2;
+        uint32 destination_contact_index = 3;
+}
+
+message GPSSystems {
+        repeated GPSSystemEntry entries = 1;
 }
